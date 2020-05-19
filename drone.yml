@@ -15,3 +15,17 @@ steps:
     volumes:
       - name: mvn_cache
         path: /root/.m2/repository
+
+  - name: pitest
+    image: argosnotary/argos-build:latest
+    commands:
+      - mvn -q -e verify -Ppitest
+    volumes:
+      - name: mvn_cache
+        path: /root/.m2/repository
+    depends_on:
+      - build
+
+volumes:
+  - name: mvn_cache
+    temp: {}
