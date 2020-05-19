@@ -25,6 +25,7 @@
         <module>argos-collector-api</module>
         <module>argos-collector-service</module>
         <module>argos-collector-docker</module>
+        <module>argos-collector-test</module>
     </modules>
     <groupId>com.rabobank.argos</groupId>
     <artifactId>argos-collector</artifactId>

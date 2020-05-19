@@ -17,6 +17,7 @@ package com.rabobank.argos.collector.xldeploy;
 
 import com.rabobank.argos.collector.ArtifactCollectorProvider;
 import com.rabobank.argos.collector.rest.api.model.Artifact;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
 
@@ -25,12 +26,14 @@ import java.util.List;
 import java.util.Map;
 
 @Component
+@Slf4j
 @Profile(ArtifactCollectorProviderImpl.XLDEPLOY)
 public class ArtifactCollectorProviderImpl implements ArtifactCollectorProvider {
     static final String XLDEPLOY = "XLDEPLOY";
 
     @Override
     public List<Artifact> collectArtifacts(Map<String, String> collectorSpecification) {
+        log.info("collecting artifacts with :" + XLDEPLOY + " collector");
         return Collections.singletonList(new Artifact()
                 .uri("target/target.jar")
                 .hash("61a0af2b177f02a14bab478e68d4907cda4dc3f642ade0432da8350ca199302b"));

@@ -20,12 +20,12 @@ import lombok.Getter;
 import java.util.Set;
 
 @Getter
-public enum CollectorType {
+public enum ArtifactCollectorType {
     XLDEPLOY("applicationName", "version"),
     GIT("repository", "version");
     private final Set<String> requiredFields;
 
-    CollectorType(String... requiredFields) {
+    ArtifactCollectorType(String... requiredFields) {
         this.requiredFields = Set.of(requiredFields);
     }
 
