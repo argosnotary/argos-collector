@@ -304,7 +304,7 @@
                         </executions>
                         <configuration>
                             <systemPropertyVariables>
-                                <argos-collector.xldeploy.rest-api.base-url>http://argos-service:8080
+                                <argos-collector.xldeploy.rest-api.base-url>http://argos-xldeploy-service:8080
                                 </argos-collector.xldeploy.rest-api.base-url>
                             </systemPropertyVariables>
                         </configuration>

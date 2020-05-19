@@ -61,8 +61,6 @@ steps:
     environment:
       spring.profiles.active: XLDEPLOY
       JAVA_OPTS: '-Xmx1g'
-      ports:
-        - 10080:8080
     depends_on:
       - build argos collector service image
 
