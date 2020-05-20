@@ -111,6 +111,7 @@ steps:
         from_secret: slack_webhook
     depends_on:
       - regression test
+      - deploy release to sonatype
 
 volumes:
   - name: mvn_cache
