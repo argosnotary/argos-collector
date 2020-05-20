@@ -71,7 +71,7 @@ steps:
         path: /root/.m2/repository
     depends_on:
       - argos-xldeploy-collector-service
-      -
+
   - name: sign artifacts
     image: plugins/gpgsign
     settings:
