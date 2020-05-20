@@ -85,23 +85,6 @@ steps:
         from_secret: argos-signing-private-key-passphrase
     depends_on:
       - regression test
-  - name: deploy release to sonatype
-    image: argosnotary/argos-build:latest
-    commands:
-      - mvn -q -f argos-collector-service/pom.xml deploy:deploy-file -Durl=https://oss.sonatype.org/service/local/staging/deploy/maven2/
-    environment:
-      ossrh_password:
-        from_secret: ossrh_login_password
-      ossrh_username:
-        from_secret: ossrh_login_user
-    volumes:
-      - name: mvn_cache
-        path: /root/.m2/repository
-    when:
-      event:
-        - tag
-    depends_on:
-      - regression test
 
   - name: slack on success
       image: plugins/slack
@@ -110,7 +93,6 @@ steps:
           from_secret: slack_webhook
       depends_on:
         - regression test
-        - deploy release to sonatype
 
 volumes:
   - name: mvn_cache
