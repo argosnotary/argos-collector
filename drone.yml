@@ -87,12 +87,12 @@ steps:
       - regression test
 
   - name: slack on success
-      image: plugins/slack
-      settings:
-        webhook:
-          from_secret: slack_webhook
-      depends_on:
-        - regression test
+    image: plugins/slack
+    settings:
+      webhook:
+        from_secret: slack_webhook
+    depends_on:
+      - regression test
 
 volumes:
   - name: mvn_cache
