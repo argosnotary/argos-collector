@@ -25,7 +25,7 @@ steps:
       - name: mvn_cache
         path: /root/.m2/repository
     depends_on:
-      - sonar
+      - build
 
 volumes:
   - name: mvn_cache
