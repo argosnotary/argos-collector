@@ -45,7 +45,7 @@ steps:
       dockerfile: argos-collector-docker/ArgosCollectorDockerFile
       password:
         from_secret: docker_login_token
-      repo: argosnotary/argos-collector-snapshot
+      repo: argosnotary/argos-collector-service-snapshot
       tags: ${DRONE_BRANCH/\//_}${DRONE_TAG}
       username:
         from_secret: docker_login_user
