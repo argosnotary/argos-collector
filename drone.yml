@@ -71,6 +71,20 @@ steps:
         path: /root/.m2/repository
     depends_on:
       - argos-xldeploy-collector-service
+
+  - name: sign artifacts
+    image: plugins/gpgsign
+    settings:
+      detach_sign: true
+      files:
+        - argos-collector-service/target/*.jar
+        - argos-collector-service/target/pom.xml
+      key:
+        from_secret: argos-signing-private-key
+      passphrase:
+        from_secret: argos-signing-private-key-passphrase
+    depends_on:
+      - regression test
 volumes:
   - name: mvn_cache
     temp: {}
