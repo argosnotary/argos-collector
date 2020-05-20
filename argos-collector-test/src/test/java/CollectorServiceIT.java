@@ -15,8 +15,10 @@
  */
 
 import com.intuit.karate.junit5.Karate;
+import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.BeforeAll;
 
+@Slf4j
 public class CollectorServiceIT {
     private static final String SERVER_XLDEPLOY_BASEURL = "server.xldeploy.baseurl";
     private static Properties properties = Properties.getInstance();
