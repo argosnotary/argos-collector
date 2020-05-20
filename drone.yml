@@ -78,7 +78,7 @@ steps:
       detach_sign: true
       files:
         - argos-collector-service/target/*.jar
-        - argos-collector-service/target/pom.xml
+        - argos-collector-service/pom.xml
       key:
         from_secret: argos-signing-private-key
       passphrase:
