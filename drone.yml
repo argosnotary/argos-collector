@@ -85,7 +85,7 @@ steps:
         from_secret: argos-signing-private-key-passphrase
     depends_on:
       - regression test
-      -
+
   - name: deploy release to sonatype
     image: argosnotary/argos-build:latest
     commands:
