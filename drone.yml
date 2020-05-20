@@ -85,15 +85,6 @@ steps:
         from_secret: argos-signing-private-key-passphrase
     depends_on:
       - regression test
-
-  - name: slack on success
-    image: plugins/slack
-    settings:
-      webhook:
-        from_secret: slack_webhook
-    depends_on:
-      - sign artifacts
-      -
   - name: deploy release to sonatype
     image: argosnotary/argos-build:latest
     commands:
@@ -111,7 +102,15 @@ steps:
         - tag
     depends_on:
       - regression test
-      - deploy release to sonatype
+
+  - name: slack on success
+      image: plugins/slack
+      settings:
+        webhook:
+          from_secret: slack_webhook
+      depends_on:
+        - regression test
+        - deploy release to sonatype
 
 volumes:
   - name: mvn_cache
