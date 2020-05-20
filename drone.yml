@@ -72,19 +72,14 @@ steps:
     depends_on:
       - argos-xldeploy-collector-service
 
-  - name: sign artifacts
-    image: plugins/gpgsign
+  - name: slack on success
+    image: plugins/slack
     settings:
-      detach_sign: true
-      files:
-        - argos-collector-service/target/*.jar
-        - argos-collector-service/target/pom.xml
-      key:
-        from_secret: argos-signing-private-key
-      passphrase:
-        from_secret: argos-signing-private-key-passphrase
+      webhook:
+        from_secret: slack_webhook
     depends_on:
       - regression test
+
 volumes:
   - name: mvn_cache
     temp: {}
