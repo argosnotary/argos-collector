@@ -8,6 +8,7 @@ platform:
   arch: amd64
 
 steps:
+
   - name: build
     image: argosnotary/argos-build:latest
     commands:
@@ -25,19 +26,19 @@ steps:
         from_secret: sonar_login
     volumes:
       - name: mvn_cache
-        path: /root/.m2/repository
+      path: /root/.m2/repository
     depends_on:
       - build
-
-    - name: pitest
-      image: argosnotary/argos-build:latest
-      commands:
-        - mvn -q -e verify -Ppitest
-      volumes:
-        - name: mvn_cache
-          path: /root/.m2/repository
-      depends_on:
-        - sonar
+      -
+  - name: pitest
+    image: argosnotary/argos-build:latest
+    commands:
+      - mvn -q -e verify -Ppitest
+    volumes:
+      - name: mvn_cache
+        path: /root/.m2/repository
+    depends_on:
+      - sonar
 
 volumes:
   - name: mvn_cache
