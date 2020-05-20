@@ -17,17 +17,17 @@ steps:
         path: /root/.m2/repository
 
   - name: sonar
-  image: argosnotary/argos-build:latest
-  commands:
-    - mvn -q -e verify sonar:sonar -Psonar -Dsonar.projectKey=argosnotary_argos-collector -Dsonar.organization=argosnotary -Dsonar.host.url=https://sonarcloud.io -Dsonar.login=$SONAR_LOGIN
-  environment:
-    SONAR_LOGIN:
-      from_secret: sonar_login
-  volumes:
-    - name: mvn_cache
-      path: /root/.m2/repository
-  depends_on:
-    - build
+    image: argosnotary/argos-build:latest
+    commands:
+      - mvn -q -e verify sonar:sonar -Psonar -Dsonar.projectKey=argosnotary_argos-collector -Dsonar.organization=argosnotary -Dsonar.host.url=https://sonarcloud.io -Dsonar.login=$SONAR_LOGIN
+    environment:
+      SONAR_LOGIN:
+        from_secret: sonar_login
+    volumes:
+      - name: mvn_cache
+        path: /root/.m2/repository
+    depends_on:
+      - build
 
     - name: pitest
       image: argosnotary/argos-build:latest
