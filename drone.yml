@@ -38,6 +38,20 @@ steps:
     depends_on:
       - sonar
 
+  - name: build argos service image
+    image: plugins/docker
+    settings:
+      context: argos-collector-docker
+      dockerfile: argos-docker/ArgosCollectorDockerFile
+      password:
+        from_secret: docker_login_token
+      repo: argosnotary/argos-collector-snapshot
+      tags: ${DRONE_BRANCH/\//_}${DRONE_TAG}
+      username:
+        from_secret: docker_login_user
+    depends_on:
+      - pitest
+      - sonar
 volumes:
   - name: mvn_cache
     temp: {}
