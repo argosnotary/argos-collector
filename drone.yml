@@ -38,11 +38,11 @@ steps:
     depends_on:
       - sonar
 
-  - name: build argos service image
+  - name: build argos collector service image
     image: plugins/docker
     settings:
       context: argos-collector-docker
-      dockerfile: argos-docker/ArgosCollectorDockerFile
+      dockerfile: argos-collector-docker/ArgosCollectorDockerFile
       password:
         from_secret: docker_login_token
       repo: argosnotary/argos-collector-snapshot
@@ -52,6 +52,14 @@ steps:
     depends_on:
       - pitest
       - sonar
+  - name: argos-xldeploy-collector-service
+    image: argosnotary/argos-collector-service-snapshot:${DRONE_BRANCH/\//_}${DRONE_TAG}
+    pull: always
+    detach: true
+    environment:
+      spring.profiles.active: XLDEPLOY
+    depends_on:
+      - build argos collector service image
 volumes:
   - name: mvn_cache
     temp: {}
