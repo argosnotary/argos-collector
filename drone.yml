@@ -15,11 +15,10 @@ steps:
     volumes:
       - name: mvn_cache
         path: /root/.m2/repository
-
   - name: sonar
     image: argosnotary/argos-build:latest
     commands:
-      - mvn -q -e verify sonar:sonar -Psonar -Dsonar.projectKey=argosnotary_argos-parent -Dsonar.organization=argosnotary -Dsonar.host.url=https://sonarcloud.io -Dsonar.login=$SONAR_LOGIN
+      - mvn -q -e verify sonar:sonar -Psonar -Dsonar.projectKey=argosnotary_argos-collector -Dsonar.organization=argosnotary -Dsonar.host.url=https://sonarcloud.io -Dsonar.login=$SONAR_LOGIN
     environment:
       SONAR_LOGIN:
         from_secret: sonar_login
@@ -42,58 +41,36 @@ steps:
   - name: build argos collector service image
     image: plugins/docker
     settings:
-      context: argos-docker
-      dockerfile: argos-docker/ArgosCollectorDockerFile
+      context: argos-collector-docker
+      dockerfile: argos-collector-docker/ArgosCollectorDockerFile
       password:
         from_secret: docker_login_token
-      repo: argosnotary/argos-service-snapshot
+      repo: argosnotary/argos-collector-service-snapshot
       tags: ${DRONE_BRANCH/\//_}${DRONE_TAG}
       username:
         from_secret: docker_login_user
     depends_on:
       - pitest
       - sonar
-
-  - name: argos-xldeploy-service
+  - name: argos-xldeploy-collector-service
     image: argosnotary/argos-collector-service-snapshot:${DRONE_BRANCH/\//_}${DRONE_TAG}
     pull: always
     detach: true
     environment:
       spring.profiles.active: XLDEPLOY
-      JAVA_OPTS: '-Xmx1g'
     depends_on:
       - build argos collector service image
-
 
   - name: regression test
     image: argosnotary/argos-build:latest
     commands:
-      - cd argos-test
+      - cd argos-collector-test
       - mvn -q clean verify -Pregression-test-drone
     volumes:
       - name: mvn_cache
         path: /root/.m2/repository
     depends_on:
-      - argos-xldeploy-service
-
-  - name: release argos collector service image
-    image: plugins/docker
-    settings:
-      auto_tag: true
-      build_args:
-        - VERSION=${DRONE_TAG}
-      context: argos-docker
-      dockerfile: argos-docker/ArgosCollectorDockerFile
-      password:
-        from_secret: docker_login_token
-      repo: argosnotary/argos-collector-service
-      username:
-        from_secret: docker_login_user
-    when:
-      event:
-        - tag
-    depends_on:
-      - regression test
+      - argos-xldeploy-collector-service
 
   - name: sign artifacts
     image: plugins/gpgsign
@@ -109,12 +86,10 @@ steps:
     depends_on:
       - regression test
 
-
   - name: deploy release to sonatype
     image: argosnotary/argos-build:latest
     commands:
       - mvn -q -f argos-collector-service/pom.xml deploy:deploy-file -Durl=https://oss.sonatype.org/service/local/staging/deploy/maven2/
-
     environment:
       ossrh_password:
         from_secret: ossrh_login_password
@@ -136,38 +111,8 @@ steps:
         from_secret: slack_webhook
     depends_on:
       - regression test
-      - release argos collector service image
+      - deploy release to sonatype
 
 volumes:
   - name: mvn_cache
     temp: {}
-
-trigger:
-  event:
-    - push
-    - tag
-
----
-kind: pipeline
-type: docker
-name: report result
-
-platform:
-  os: linux
-  arch: amd64
-
-steps:
-  - name: slack on failure
-    image: plugins/slack
-    settings:
-      webhook:
-        from_secret: slack_webhook
-
-trigger:
-  status:
-    - failure
-
-depends_on:
-  - argosbuild
-
-...

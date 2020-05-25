@@ -37,6 +37,7 @@ public class ServiceStatusHelper {
         HttpClient client = HttpClient.newHttpClient();
         await().atMost(1, MINUTES).until(() -> {
             try {
+                log.debug(properties.getApiXLDeployBaseUrl());
                 HttpRequest request = HttpRequest.newBuilder()
                         .uri(URI.create(properties.getApiXLDeployBaseUrl() + "/actuator/health"))
                         .build();
