@@ -36,7 +36,8 @@ public class ArtifactCollectorConfig {
         return availableCollectorTypes
                 .stream()
                 .filter(artifactCollectorType -> profiles.contains(artifactCollectorType.name()))
-                .findFirst().orElseThrow(() -> new ArtifactCollectorException("service should be running with one collector type configured"));
+                .findFirst()
+                .orElseThrow(() -> new ArtifactCollectorException("service should be running with one collector type configured"));
     }
 
 }
