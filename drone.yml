@@ -52,20 +52,22 @@ steps:
     depends_on:
       - pitest
       - sonar
+
   - name: build argos collector xldeploy stub
-      image: plugins/docker
-      settings:
-        context: argos-collector-docker/xl-deploy-stub
-        dockerfile: argos-collector-docker/xl-deploy-stub/DockerFile
-        password:
-          from_secret: docker_login_token
-        repo: argosnotary/argos-collector-xl-deploy-stub
-        tags: ${DRONE_BRANCH/\//_}${DRONE_TAG}
-        username:
-          from_secret: docker_login_user
+    image: plugins/docker
+    settings:
+      context: argos-collector-docker/xl-deploy-stub
+      dockerfile: argos-collector-docker/xl-deploy-stub/DockerFile
+      password:
+        from_secret: docker_login_token
+      repo: argosnotary/argos-collector-xl-deploy-stub
+      tags: ${DRONE_BRANCH/\//_}${DRONE_TAG}
+      username:
+        from_secret: docker_login_user
       depends_on:
         - pitest
         - sonar
+
   - name: argos-xldeploy-collector-service
     image: argosnotary/argos-collector-service-snapshot:${DRONE_BRANCH/\//_}${DRONE_TAG}
     pull: always
