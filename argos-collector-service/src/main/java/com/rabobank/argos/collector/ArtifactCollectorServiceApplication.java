@@ -23,5 +23,4 @@ public class ArtifactCollectorServiceApplication {
     public static void main(String[] args) {
         SpringApplication.run(ArtifactCollectorServiceApplication.class, args);
     }
-
 }

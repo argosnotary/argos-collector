@@ -36,8 +36,9 @@ public class ArtifactCollectorRestService implements ArtifactCollectorApi {
     private final Validator validator;
     @Override
     public ResponseEntity<List<Artifact>> collectArtifacts(@Valid Map<String, String> collectorSpecification) {
-        configuredArtifactCollectorType.validate(collectorSpecification, validator);
-        List<Artifact> artifacts = artifactCollectorProvider.collectArtifacts(collectorSpecification);
+        SpecificationAdapter specificationAdapter = configuredArtifactCollectorType.createSpecificationAdapter(collectorSpecification);
+        configuredArtifactCollectorType.validate(specificationAdapter, validator);
+        List<Artifact> artifacts = artifactCollectorProvider.collectArtifacts(specificationAdapter);
         return ResponseEntity.ok(artifacts);
     }
 }

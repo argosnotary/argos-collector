@@ -13,13 +13,20 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.rabobank.argos.collector;
+package com.rabobank.argos.collector.xldeploy;
 
 import com.rabobank.argos.collector.rest.api.model.Artifact;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.util.List;
 
-public interface ArtifactCollectorProvider<T extends SpecificationAdapter> {
-    List<Artifact> collectArtifacts(T collectorSpecification);
-
+@NoArgsConstructor
+@Getter
+@Setter
+public class XLDeployResponse {
+    private List<Artifact> entity;
+    private String stdout;
+    private String stderr;
 }

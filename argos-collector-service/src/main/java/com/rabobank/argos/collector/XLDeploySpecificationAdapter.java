@@ -23,12 +23,12 @@ import javax.validation.constraints.Size;
 import java.util.Map;
 
 @RequiredArgsConstructor
-public class XLDeployValidationAdapter implements ValidationAdapter {
+public class XLDeploySpecificationAdapter implements SpecificationAdapter {
     private static final String CHARACTERS_ARE_NOT_ALLOWED = "(no `/`, `\\`, `:`, `[`, `]`, `|`, `,` or `*`) characters are allowed";
     private final Map<String, String> collectorSpecification;
 
     @NotNull
-    @Pattern(regexp = "^[^/\\\\:\\[\\]|,*]]*$", message = CHARACTERS_ARE_NOT_ALLOWED)
+    @Pattern(regexp = "^[^/\\\\:\\[\\]|,*]*$", message = CHARACTERS_ARE_NOT_ALLOWED)
     @Size(max = 255)
     public String getVersion() {
         return collectorSpecification
@@ -36,7 +36,7 @@ public class XLDeployValidationAdapter implements ValidationAdapter {
     }
 
     @NotNull
-    @Pattern(regexp = "^[^/\\\\:\\[\\]|,*]]*$", message = CHARACTERS_ARE_NOT_ALLOWED)
+    @Pattern(regexp = "^[^/\\\\:\\[\\]|,*]*$", message = CHARACTERS_ARE_NOT_ALLOWED)
     @Size(max = 255)
     public String getApplicationName() {
         return collectorSpecification
@@ -44,9 +44,9 @@ public class XLDeployValidationAdapter implements ValidationAdapter {
     }
 
     @NotNull
-    public String getUser() {
+    public String getUserName() {
         return collectorSpecification
-                .getOrDefault("user", null);
+                .getOrDefault("userName", null);
     }
 
     @NotNull

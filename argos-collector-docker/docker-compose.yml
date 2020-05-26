@@ -36,6 +36,13 @@ services:
     ports:
       - 10080:8080
 
+  xl-deploy-stub:
+    build:
+      context: xl-deploy-stub
+    environment:
+      JAVA_OPTS: '-Xmx500m'
+    ports:
+      - 9087:8080
 volumes:
   maven_cache:
     external: true

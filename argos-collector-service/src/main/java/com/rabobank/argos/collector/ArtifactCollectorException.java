@@ -20,7 +20,7 @@ public class ArtifactCollectorException extends RuntimeException {
         super(message);
     }
 
-    public ArtifactCollectorException(String mesage, ReflectiveOperationException e) {
+    public ArtifactCollectorException(String mesage, Exception e) {
         super(mesage, e);
     }
 }

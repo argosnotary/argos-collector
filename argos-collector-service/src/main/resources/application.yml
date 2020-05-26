@@ -21,7 +21,6 @@ spring:
     default-property-inclusion: non_null
   application:
     name: argos-collector-service
-
 management:
   endpoints:
     enabled-by-default: false
@@ -33,3 +32,7 @@ management:
       enabled: true
     health:
       enabled: true
+argos-collector:
+  collectortypes:
+    xldeploy:
+      baseurl: http://localhost:9087

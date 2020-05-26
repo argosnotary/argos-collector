@@ -28,30 +28,33 @@ import java.util.stream.Collectors;
 
 
 public enum ArtifactCollectorType {
-    XLDEPLOY(XLDeployValidationAdapter.class);
-    private Class<? extends ValidationAdapter> validationAdapterClass;
+    XLDEPLOY(XLDeploySpecificationAdapter.class);
+    private Class<? extends SpecificationAdapter> validationAdapterClass;
 
-    ArtifactCollectorType(Class<? extends ValidationAdapter> validationAdapterClass) {
+    ArtifactCollectorType(Class<? extends SpecificationAdapter> validationAdapterClass) {
         this.validationAdapterClass = validationAdapterClass;
     }
 
-    public void validate(Map<String, String> collectorSpecification, Validator validator) {
+    public <T extends SpecificationAdapter> T createSpecificationAdapter(Map<String, String> collectorSpecification) {
         try {
-            Constructor<? extends ValidationAdapter> constructor = validationAdapterClass.getConstructor(Map.class);
+            Constructor<? extends SpecificationAdapter> constructor = validationAdapterClass.getConstructor(Map.class);
             assert constructor != null;
-            ValidationAdapter validationAdapter = constructor.newInstance(collectorSpecification);
-            List<ValidationMessage> validationMessages = validateInput(validator, validationAdapter);
-            if (!validationMessages.isEmpty()) {
-                throw new ArtifactCollectorValidationException(validationMessages);
-            }
+            return (T) constructor.newInstance(collectorSpecification);
         } catch (NoSuchMethodException | InstantiationException | IllegalAccessException | InvocationTargetException e) {
             throw new ArtifactCollectorException("error while instantiating validator class", e);
         }
     }
 
-    private List<ValidationMessage> validateInput(Validator validator, ValidationAdapter validationAdapter) {
-        return validator.validate(validationAdapter).stream()
-                .sorted(Comparator.comparing((ConstraintViolation<? extends ValidationAdapter> cv) -> cv.getPropertyPath().toString())
+    public <T extends SpecificationAdapter> void validate(T specificationAdapter, Validator validator) {
+        List<ValidationMessage> validationMessages = validateInput(validator, specificationAdapter);
+        if (!validationMessages.isEmpty()) {
+            throw new ArtifactCollectorValidationException(validationMessages);
+        }
+    }
+
+    private List<ValidationMessage> validateInput(Validator validator, SpecificationAdapter specificationAdapter) {
+        return validator.validate(specificationAdapter).stream()
+                .sorted(Comparator.comparing((ConstraintViolation<? extends SpecificationAdapter> cv) -> cv.getPropertyPath().toString())
                         .thenComparing(ConstraintViolation::getMessage))
                 .map(error -> new ValidationMessage()
                         .field(error.getPropertyPath().toString())
