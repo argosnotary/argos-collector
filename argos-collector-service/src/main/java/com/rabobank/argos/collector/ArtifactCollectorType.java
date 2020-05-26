@@ -15,48 +15,18 @@
  */
 package com.rabobank.argos.collector;
 
-import com.rabobank.argos.collector.rest.api.model.ValidationMessage;
+import lombok.Getter;
 
-import javax.validation.ConstraintViolation;
-import javax.validation.Validator;
-import java.lang.reflect.Constructor;
-import java.lang.reflect.InvocationTargetException;
-import java.util.Comparator;
-import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
+import java.util.Set;
 
-
+@Getter
 public enum ArtifactCollectorType {
-    XLDEPLOY(XLDeployValidationAdapter.class);
-    private Class<? extends ValidationAdapter> validationAdapterClass;
+    XLDEPLOY("applicationName", "version"),
+    GIT("repository", "version");
+    private final Set<String> requiredFields;
 
-    ArtifactCollectorType(Class<? extends ValidationAdapter> validationAdapterClass) {
-        this.validationAdapterClass = validationAdapterClass;
+    ArtifactCollectorType(String... requiredFields) {
+        this.requiredFields = Set.of(requiredFields);
     }
 
-    public void validate(Map<String, String> collectorSpecification, Validator validator) {
-        try {
-            Constructor<? extends ValidationAdapter> constructor = validationAdapterClass.getConstructor(Map.class);
-            assert constructor != null;
-            ValidationAdapter validationAdapter = constructor.newInstance(collectorSpecification);
-            List<ValidationMessage> validationMessages = validateInput(validator, validationAdapter);
-            if (!validationMessages.isEmpty()) {
-                throw new ArtifactCollectorValidationException(validationMessages);
-            }
-        } catch (NoSuchMethodException | InstantiationException | IllegalAccessException | InvocationTargetException e) {
-            throw new ArtifactCollectorException("error while instantiating validator class", e);
-        }
-    }
-
-    private List<ValidationMessage> validateInput(Validator validator, ValidationAdapter validationAdapter) {
-        return validator.validate(validationAdapter).stream()
-                .sorted(Comparator.comparing((ConstraintViolation<? extends ValidationAdapter> cv) -> cv.getPropertyPath().toString())
-                        .thenComparing(ConstraintViolation::getMessage))
-                .map(error -> new ValidationMessage()
-                        .field(error.getPropertyPath().toString())
-                        .message(error.getMessage())
-                )
-                .collect(Collectors.toList());
-    }
 }
