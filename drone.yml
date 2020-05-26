@@ -76,7 +76,7 @@ steps:
       spring.profiles.active: XLDEPLOY
     depends_on:
       - build argos collector service image
-      -
+
   - name: argos-collector-xl-deploy-stub
     image: argosnotary/argos-collector-xl-deploy-stub:${DRONE_BRANCH/\//_}${DRONE_TAG}
     pull: always
