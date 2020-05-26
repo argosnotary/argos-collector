@@ -306,6 +306,10 @@
                             <systemPropertyVariables>
                                 <argos-collector.xldeploy.rest-api.base-url>http://argos-xldeploy-collector-service:8080
                                 </argos-collector.xldeploy.rest-api.base-url>
+                                <argos-collector.collectortypes.xldeploy.baseurl>
+                                    http://argos-collector-xl-deploy-stub:8080
+                                </argos-collector.collectortypes.xldeploy.baseurl>
+
                             </systemPropertyVariables>
                         </configuration>
                     </plugin>
