@@ -40,6 +40,7 @@ services:
   xl-deploy-stub:
     build:
       context: xl-deploy-stub
+      dockerfile: DockerFile
     environment:
       JAVA_OPTS: '-Xmx500m'
     ports:
