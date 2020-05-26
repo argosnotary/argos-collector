@@ -18,6 +18,7 @@ package com.rabobank.argos.collector.xldeploy;
 import com.rabobank.argos.collector.ArtifactCollectorProvider;
 import com.rabobank.argos.collector.XLDeploySpecificationAdapter;
 import com.rabobank.argos.collector.rest.api.model.Artifact;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Profile;
@@ -34,12 +35,12 @@ import java.util.List;
 @Component
 @Slf4j
 @Profile(ArtifactCollectorProviderImpl.XLDEPLOY)
-
+@RequiredArgsConstructor
 public class ArtifactCollectorProviderImpl implements ArtifactCollectorProvider<XLDeploySpecificationAdapter> {
     static final String XLDEPLOY = "XLDEPLOY";
     @Value("${argos-collector.collectortypes.xldeploy.baseurl}")
     private String xlDeployBaseUrl;
-    private final RestTemplate restTemplate = new RestTemplate();
+    private final RestTemplate restTemplate;
 
     @Override
     public List<Artifact> collectArtifacts(XLDeploySpecificationAdapter specificationAdapter) {

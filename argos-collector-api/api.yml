@@ -65,7 +65,7 @@ components:
   schemas:
     CollectorSpecification:
       type: object
-      description: additional key value pair attributes that can very per collector type for XLDEPLOY the keys are 'applicationName'
+      description: additional key value pair attributes that can vary per collector type
       additionalProperties:
         type: string
 

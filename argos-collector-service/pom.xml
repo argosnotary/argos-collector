@@ -494,13 +494,16 @@
                             <threads>4</threads>
                             <timeoutConstant>10000</timeoutConstant>
                             <timestampedReports>false</timestampedReports>
-                            <mutationThreshold>0</mutationThreshold>
-                            <coverageThreshold>0</coverageThreshold>
+                            <mutationThreshold>85</mutationThreshold>
+                            <coverageThreshold>85</coverageThreshold>
                             <failWhenNoMutations>true</failWhenNoMutations>
                             <reportsDirectory>${project.build.directory}/pi-report</reportsDirectory>
                             <avoidCallsTo>
                                 <avoidCallsTo>org.slf4j</avoidCallsTo>
                             </avoidCallsTo>
+                            <excludedClasses>
+                                <excludedClasse>com.rabobank.argos.collector.rest.api.*</excludedClasse>
+                            </excludedClasses>
                             <targetClasses>
                                 <param>com.rabobank.argos.*</param>
                             </targetClasses>

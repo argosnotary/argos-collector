@@ -13,12 +13,17 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.rabobank.argos.collector;
+package com.rabobank.argos.collector.xldeploy;
 
-import com.rabobank.argos.collector.rest.api.model.Artifact;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.web.client.RestTemplate;
 
-import java.util.List;
+@Configuration
+public class RestConfig {
 
-public interface ArtifactCollectorProvider<T extends SpecificationAdapter> {
-    List<Artifact> collectArtifacts(T collectorSpecification);
+    @Bean
+    public RestTemplate restTemplate() {
+        return new RestTemplate();
+    }
 }
