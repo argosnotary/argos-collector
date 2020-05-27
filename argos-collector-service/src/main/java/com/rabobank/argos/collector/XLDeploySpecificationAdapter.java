@@ -45,9 +45,9 @@ public class XLDeploySpecificationAdapter implements SpecificationAdapter {
 
     @NotNull
     @Size(max = 255)
-    public String getUserName() {
+    public String getUsername() {
         return collectorSpecification
-                .getOrDefault("userName", null);
+                .getOrDefault("username", null);
     }
 
     @NotNull

@@ -61,7 +61,7 @@ public class ArtifactCollectorProviderImpl implements ArtifactCollectorProvider<
     private HttpHeaders createHeaders(XLDeploySpecificationAdapter specificationAdapter) {
         HttpHeaders headers = new HttpHeaders();
         headers.set("Accept", "application/json");
-        headers.setBasicAuth(specificationAdapter.getUserName(), specificationAdapter.getPassword());
+        headers.setBasicAuth(specificationAdapter.getUsername(), specificationAdapter.getPassword());
         return headers;
     }
 
