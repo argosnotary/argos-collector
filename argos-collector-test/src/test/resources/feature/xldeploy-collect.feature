@@ -23,6 +23,6 @@ Feature: XLDeploy
 
   Scenario: collect artifacts on xldeploy with valid request should return a 200
     Given path '/api/collector/artifacts'
-    And request {applicationName:'xldeploy',version:'1',userName:'admin',password:'adm1n'}
+    And request {applicationName:'xldeploy',version:'1',username:'admin',password:'adm1n'}
     When method POST
     Then status 200
