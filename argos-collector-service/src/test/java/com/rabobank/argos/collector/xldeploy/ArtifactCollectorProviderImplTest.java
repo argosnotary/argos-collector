@@ -73,7 +73,7 @@ class ArtifactCollectorProviderImplTest {
         xlDeployResponse.setEntity(Collections.singletonList(artifact));
         when(xlDeploySpecificationAdapter.getApplicationName()).thenReturn("appName");
         when(xlDeploySpecificationAdapter.getVersion()).thenReturn("v1");
-        when(xlDeploySpecificationAdapter.getUserName()).thenReturn("user");
+        when(xlDeploySpecificationAdapter.getUsername()).thenReturn("user");
         when(xlDeploySpecificationAdapter.getPassword()).thenReturn("pw");
         when(restTemplate.exchange(anyString(),
                 any(HttpMethod.class),
