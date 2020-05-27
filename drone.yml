@@ -74,6 +74,7 @@ steps:
     detach: true
     environment:
       spring.profiles.active: XLDEPLOY
+      argos-collector.collectortypes.xldeploy.baseurl: http://argos-collector-xl-deploy-stub:8080
     depends_on:
       - build argos collector service image
 
