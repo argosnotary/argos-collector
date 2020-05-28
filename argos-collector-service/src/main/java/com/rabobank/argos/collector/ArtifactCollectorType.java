@@ -15,18 +15,52 @@
  */
 package com.rabobank.argos.collector;
 
-import lombok.Getter;
+import com.rabobank.argos.collector.rest.api.model.ValidationMessage;
+import com.rabobank.argos.collector.xldeploy.XLDeploySpecificationAdapter;
 
-import java.util.Set;
+import javax.validation.ConstraintViolation;
+import javax.validation.Validator;
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
+import java.util.Comparator;
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
-@Getter
+
 public enum ArtifactCollectorType {
-    XLDEPLOY("applicationName", "version"),
-    GIT("repository", "version");
-    private final Set<String> requiredFields;
+    XLDEPLOY(XLDeploySpecificationAdapter.class);
+    private Class<? extends SpecificationAdapter> validationAdapterClass;
 
-    ArtifactCollectorType(String... requiredFields) {
-        this.requiredFields = Set.of(requiredFields);
+    ArtifactCollectorType(Class<? extends SpecificationAdapter> validationAdapterClass) {
+        this.validationAdapterClass = validationAdapterClass;
     }
 
+    public <T extends SpecificationAdapter> T createSpecificationAdapter(Map<String, String> collectorSpecification) {
+        try {
+            Constructor<? extends SpecificationAdapter> constructor = validationAdapterClass.getConstructor(Map.class);
+            assert constructor != null;
+            return (T) constructor.newInstance(collectorSpecification);
+        } catch (NoSuchMethodException | InstantiationException | IllegalAccessException | InvocationTargetException e) {
+            throw new ArtifactCollectorException("error while instantiating validator class", e);
+        }
+    }
+
+    public <T extends SpecificationAdapter> void validate(T specificationAdapter, Validator validator) {
+        List<ValidationMessage> validationMessages = validateInput(validator, specificationAdapter);
+        if (!validationMessages.isEmpty()) {
+            throw new ArtifactCollectorValidationException(validationMessages);
+        }
+    }
+
+    private List<ValidationMessage> validateInput(Validator validator, SpecificationAdapter specificationAdapter) {
+        return validator.validate(specificationAdapter).stream()
+                .sorted(Comparator.comparing((ConstraintViolation<? extends SpecificationAdapter> cv) -> cv.getPropertyPath().toString())
+                        .thenComparing(ConstraintViolation::getMessage))
+                .map(error -> new ValidationMessage()
+                        .field(error.getPropertyPath().toString())
+                        .message(error.getMessage())
+                )
+                .collect(Collectors.toList());
+    }
 }

@@ -23,6 +23,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
+import javax.validation.Validator;
 import java.util.List;
 import java.util.Map;
 
@@ -31,10 +32,13 @@ import java.util.Map;
 @RequestMapping("/api")
 public class ArtifactCollectorRestService implements ArtifactCollectorApi {
     private final ArtifactCollectorProvider artifactCollectorProvider;
-
+    private final ArtifactCollectorType configuredArtifactCollectorType;
+    private final Validator validator;
     @Override
     public ResponseEntity<List<Artifact>> collectArtifacts(@Valid Map<String, String> collectorSpecification) {
-        List<Artifact> artifacts = artifactCollectorProvider.collectArtifacts(collectorSpecification);
+        SpecificationAdapter specificationAdapter = configuredArtifactCollectorType.createSpecificationAdapter(collectorSpecification);
+        configuredArtifactCollectorType.validate(specificationAdapter, validator);
+        List<Artifact> artifacts = artifactCollectorProvider.collectArtifacts(specificationAdapter);
         return ResponseEntity.ok(artifacts);
     }
 }

@@ -13,14 +13,20 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.rabobank.argos.collector;
+package com.rabobank.argos.collector.xldeploy;
 
-import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.rabobank.argos.collector.rest.api.model.Artifact;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
-@SpringBootApplication
-public class ArtifactCollectorServiceApplication {
-    public static void main(String[] args) {
-        SpringApplication.run(ArtifactCollectorServiceApplication.class, args);
-    }
+import java.util.List;
+
+@NoArgsConstructor
+@Getter
+@Setter
+@JsonIgnoreProperties(ignoreUnknown = true)
+public class XLDeployResponse {
+    private List<Artifact> entity;
 }

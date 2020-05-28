@@ -15,12 +15,6 @@
  */
 package com.rabobank.argos.collector;
 
-import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
-
-@SpringBootApplication
-public class ArtifactCollectorServiceApplication {
-    public static void main(String[] args) {
-        SpringApplication.run(ArtifactCollectorServiceApplication.class, args);
-    }
+public interface SpecificationAdapter {
+    //marker interface
 }

@@ -32,10 +32,19 @@ services:
         - VERSION=compose
     environment:
       spring.profiles.active: XLDEPLOY
+      argos-collector.collectortypes.xldeploy.baseurl: http://xl-deploy-stub:8080
       JAVA_OPTS: '-Xmx1g'
     ports:
-      - 10080:8080
+      - 8080:8080
 
+  xl-deploy-stub:
+    build:
+      context: xl-deploy-stub
+      dockerfile: DockerFile
+    environment:
+      JAVA_OPTS: '-Xmx500m'
+    ports:
+      - 9087:8080
 volumes:
   maven_cache:
     external: true

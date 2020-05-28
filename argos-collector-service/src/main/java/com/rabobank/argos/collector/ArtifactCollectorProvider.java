@@ -18,9 +18,7 @@ package com.rabobank.argos.collector;
 import com.rabobank.argos.collector.rest.api.model.Artifact;
 
 import java.util.List;
-import java.util.Map;
 
-public interface ArtifactCollectorProvider {
-    List<Artifact> collectArtifacts(Map<String, String> collectorSpecification);
-
+public interface ArtifactCollectorProvider<T extends SpecificationAdapter> {
+    List<Artifact> collectArtifacts(T collectorSpecification);
 }

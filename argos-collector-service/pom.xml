@@ -39,6 +39,7 @@
         <pitest.version>1.4.10</pitest.version>
         <io.jsonwebtoken.version>0.10.7</io.jsonwebtoken.version>
         <bouncycastle.version>1.64</bouncycastle.version>
+        <commons-io.version>2.6</commons-io.version>
     </properties>
 
     <licenses>
@@ -106,6 +107,12 @@
             <artifactId>lombok</artifactId>
             <version>${lombok.version}</version>
             <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>commons-io</groupId>
+            <artifactId>commons-io</artifactId>
+            <version>${commons-io.version}</version>
+            <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.junit.jupiter</groupId>
@@ -494,13 +501,16 @@
                             <threads>4</threads>
                             <timeoutConstant>10000</timeoutConstant>
                             <timestampedReports>false</timestampedReports>
-                            <mutationThreshold>0</mutationThreshold>
-                            <coverageThreshold>0</coverageThreshold>
+                            <mutationThreshold>85</mutationThreshold>
+                            <coverageThreshold>85</coverageThreshold>
                             <failWhenNoMutations>true</failWhenNoMutations>
                             <reportsDirectory>${project.build.directory}/pi-report</reportsDirectory>
                             <avoidCallsTo>
                                 <avoidCallsTo>org.slf4j</avoidCallsTo>
                             </avoidCallsTo>
+                            <excludedClasses>
+                                <excludedClasse>com.rabobank.argos.collector.rest.api.*</excludedClasse>
+                            </excludedClasses>
                             <targetClasses>
                                 <param>com.rabobank.argos.*</param>
                             </targetClasses>
