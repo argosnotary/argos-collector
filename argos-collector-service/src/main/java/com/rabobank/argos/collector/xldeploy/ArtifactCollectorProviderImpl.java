@@ -19,7 +19,6 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.rabobank.argos.collector.ArtifactCollectorException;
 import com.rabobank.argos.collector.ArtifactCollectorProvider;
-import com.rabobank.argos.collector.XLDeploySpecificationAdapter;
 import com.rabobank.argos.collector.rest.api.model.Artifact;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

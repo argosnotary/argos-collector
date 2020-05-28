@@ -15,6 +15,7 @@
  */
 package com.rabobank.argos.collector;
 
+import com.rabobank.argos.collector.xldeploy.XLDeploySpecificationAdapter;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;

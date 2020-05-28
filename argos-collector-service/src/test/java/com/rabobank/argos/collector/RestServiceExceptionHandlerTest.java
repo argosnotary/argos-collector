@@ -15,6 +15,7 @@
  */
 package com.rabobank.argos.collector;
 
+import com.rabobank.argos.collector.rest.api.model.Error;
 import com.rabobank.argos.collector.rest.api.model.ValidationError;
 import com.rabobank.argos.collector.rest.api.model.ValidationMessage;
 import org.junit.jupiter.api.BeforeEach;
@@ -79,7 +80,9 @@ class RestServiceExceptionHandlerTest {
 
     @Test
     void handleRuntimeExceptionShouldReturnServerError() {
-        ResponseEntity responseEntity = restServiceExceptionHandler.handleRuntimeException(runtimeException);
+        when(runtimeException.getMessage()).thenReturn("message");
+        ResponseEntity<Error> responseEntity = restServiceExceptionHandler.handleRuntimeException(runtimeException);
+        assertThat(responseEntity.getBody().getMessage(), is("message"));
         assertThat(responseEntity.getStatusCode(), is(HttpStatus.INTERNAL_SERVER_ERROR));
     }
 }

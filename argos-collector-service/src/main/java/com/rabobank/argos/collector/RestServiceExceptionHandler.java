@@ -15,6 +15,7 @@
  */
 package com.rabobank.argos.collector;
 
+import com.rabobank.argos.collector.rest.api.model.Error;
 import com.rabobank.argos.collector.rest.api.model.ValidationError;
 import com.rabobank.argos.collector.rest.api.model.ValidationMessage;
 import lombok.extern.slf4j.Slf4j;
@@ -57,9 +58,10 @@ public class RestServiceExceptionHandler {
     }
 
     @ExceptionHandler(value = {RuntimeException.class})
-    public ResponseEntity handleRuntimeException(RuntimeException e) {
+    public ResponseEntity<Error> handleRuntimeException(RuntimeException e) {
         log.error("{}", e.getMessage(), e);
-        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                .body(new Error().message(e.getMessage()));
     }
 
     private ValidationError createValidationError(ArtifactCollectorValidationException ex) {

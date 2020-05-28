@@ -16,6 +16,7 @@
 package com.rabobank.argos.collector;
 
 import com.rabobank.argos.collector.rest.api.model.ValidationMessage;
+import com.rabobank.argos.collector.xldeploy.XLDeploySpecificationAdapter;
 
 import javax.validation.ConstraintViolation;
 import javax.validation.Validator;

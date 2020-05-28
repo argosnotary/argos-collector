@@ -16,7 +16,6 @@
 package com.rabobank.argos.collector.xldeploy;
 
 import com.rabobank.argos.collector.ArtifactCollectorException;
-import com.rabobank.argos.collector.XLDeploySpecificationAdapter;
 import com.rabobank.argos.collector.rest.api.model.Artifact;
 import org.apache.commons.io.IOUtils;
 import org.junit.jupiter.api.BeforeEach;
