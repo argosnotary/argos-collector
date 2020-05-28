@@ -39,6 +39,7 @@
         <pitest.version>1.4.10</pitest.version>
         <io.jsonwebtoken.version>0.10.7</io.jsonwebtoken.version>
         <bouncycastle.version>1.64</bouncycastle.version>
+        <commons-io.version>2.6</commons-io.version>
     </properties>
 
     <licenses>
@@ -106,6 +107,12 @@
             <artifactId>lombok</artifactId>
             <version>${lombok.version}</version>
             <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>commons-io</groupId>
+            <artifactId>commons-io</artifactId>
+            <version>${commons-io.version}</version>
+            <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.junit.jupiter</groupId>

@@ -36,7 +36,8 @@ import static org.mockito.Mockito.when;
 class RestServiceExceptionHandlerTest {
     @Mock
     private ArtifactCollectorValidationException artifactCollectorValidationException;
-
+    @Mock
+    private ArtifactCollectorException artifactCollectorException;
     @Mock
     private RuntimeException runtimeException;
 
@@ -54,6 +55,26 @@ class RestServiceExceptionHandlerTest {
         ResponseEntity<ValidationError> errorResponseEntity = restServiceExceptionHandler.handleValidationError(artifactCollectorValidationException);
         assertThat(errorResponseEntity.getStatusCode(), is(HttpStatus.BAD_REQUEST));
         assertThat(errorResponseEntity.getBody().getMessages(), hasSize(1));
+    }
+
+    @Test
+    void handleArtifactCollectorErrorWithTypeServerErrorShouldReturnServerError() {
+        when(artifactCollectorException.getExceptionType())
+                .thenReturn(ArtifactCollectorException.Type.SERVER_ERROR);
+        when(artifactCollectorException.getMessage()).thenReturn("message");
+        ResponseEntity<ValidationError> errorResponseEntity = restServiceExceptionHandler.handleArtifactCollectorError(artifactCollectorException);
+        assertThat(errorResponseEntity.getStatusCode(), is(HttpStatus.INTERNAL_SERVER_ERROR));
+    }
+
+    @Test
+    void handleArtifactCollectorErrorWithTypeBadRequestShouldReturnBadRequest() {
+        when(artifactCollectorException.getExceptionType())
+                .thenReturn(ArtifactCollectorException.Type.BAD_REQUEST);
+        when(artifactCollectorException.getMessage()).thenReturn("message");
+        ResponseEntity<ValidationError> errorResponseEntity = restServiceExceptionHandler.handleArtifactCollectorError(artifactCollectorException);
+        assertThat(errorResponseEntity.getStatusCode(), is(HttpStatus.BAD_REQUEST));
+        assertThat(errorResponseEntity.getBody().getMessages(), hasSize(1));
+        assertThat(errorResponseEntity.getBody().getMessages().get(0).getMessage(), is("message"));
     }
 
     @Test

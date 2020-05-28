@@ -15,6 +15,7 @@
  */
 package com.rabobank.argos.collector.xldeploy;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.rabobank.argos.collector.rest.api.model.Artifact;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -25,8 +26,7 @@ import java.util.List;
 @NoArgsConstructor
 @Getter
 @Setter
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class XLDeployResponse {
     private List<Artifact> entity;
-    private String stdout;
-    private String stderr;
 }

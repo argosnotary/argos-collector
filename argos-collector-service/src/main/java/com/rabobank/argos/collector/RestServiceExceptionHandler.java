@@ -40,6 +40,22 @@ public class RestServiceExceptionHandler {
         return ResponseEntity.badRequest().contentType(APPLICATION_JSON).body(createValidationError(exception));
     }
 
+    @ExceptionHandler(value = {ArtifactCollectorException.class})
+    public ResponseEntity<ValidationError> handleArtifactCollectorError(ArtifactCollectorException exception) {
+        if (ArtifactCollectorException.Type.BAD_REQUEST == exception.getExceptionType()) {
+            return ResponseEntity.badRequest().contentType(APPLICATION_JSON).body(createValidationError(exception));
+        } else {
+            log.error("{}", exception.getMessage(), exception);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
+    }
+
+    private ValidationError createValidationError(ArtifactCollectorException exception) {
+        return new ValidationError()
+                .addMessagesItem(new ValidationMessage()
+                        .message(exception.getMessage()));
+    }
+
     @ExceptionHandler(value = {RuntimeException.class})
     public ResponseEntity handleRuntimeException(RuntimeException e) {
         log.error("{}", e.getMessage(), e);
@@ -48,7 +64,7 @@ public class RestServiceExceptionHandler {
 
     private ValidationError createValidationError(ArtifactCollectorValidationException ex) {
         ValidationError validationError = new ValidationError();
-        List<ValidationMessage> validationMessages = new ArrayList(ex.getValidationMessages());
+        List<ValidationMessage> validationMessages = new ArrayList<>(ex.getValidationMessages());
         validationError.setMessages(validationMessages);
         return validationError;
     }

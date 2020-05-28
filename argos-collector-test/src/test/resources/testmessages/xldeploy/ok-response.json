@@ -1,0 +1,18 @@
+[
+  {
+    "uri": "deployit-manifest.xml",
+    "hash": "995e418909d8402e93885fa30d212eca41754f51165486266978aedce0337c48"
+  },
+  {
+    "uri": "localFile/sprint review.odp",
+    "hash": "659289d6936a753e43bc4dc1cec2e19720c1426ea9fb98b935188449bba4c2a2"
+  },
+  {
+    "uri": "petclinic.war/petclinic.war",
+    "hash": "dea61ebf3c08110f9044cf6c48a45da742809d471c1e817fe9a6637aedab3f10"
+  },
+  {
+    "uri": "index.html",
+    "hash": "38ffd4972ae513a0c79a8be4573403edcd709f0f572105362b08ff50cf6de521"
+  }
+]

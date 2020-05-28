@@ -15,8 +15,10 @@
  */
 package com.rabobank.argos.collector.xldeploy;
 
+import com.rabobank.argos.collector.ArtifactCollectorException;
 import com.rabobank.argos.collector.XLDeploySpecificationAdapter;
 import com.rabobank.argos.collector.rest.api.model.Artifact;
+import org.apache.commons.io.IOUtils;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -29,15 +31,19 @@ import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.util.ReflectionTestUtils;
+import org.springframework.web.client.RestClientResponseException;
 import org.springframework.web.client.RestTemplate;
 
+import java.io.IOException;
 import java.util.Collections;
 import java.util.List;
 
+import static java.nio.charset.StandardCharsets.UTF_8;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.sameInstance;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.verify;
@@ -58,6 +64,9 @@ class ArtifactCollectorProviderImplTest {
     private ArtifactCollectorProviderImpl artifactCollectorProvider;
     @Mock
     private XLDeploySpecificationAdapter xlDeploySpecificationAdapter;
+
+    @Mock
+    private RestClientResponseException restClientResponseException;
 
     @BeforeEach
     void setup() {
@@ -91,5 +100,48 @@ class ArtifactCollectorProviderImplTest {
         assertThat(httpEntityArgumentCaptor.getValue().getHeaders().containsKey("Accept"), is(true));
         assertThat(httpEntityArgumentCaptor.getValue().getHeaders().get("Accept").toString(), is("[application/json]"));
         assertThat(httpEntityArgumentCaptor.getValue().getHeaders().get("Authorization").toString(), is("[Basic dXNlcjpwdw==]"));
+    }
+
+
+    @Test
+    void collectArtifactsWithIncorrectQueryParamsShouldReturnBadRequest() throws IOException {
+
+        when(xlDeploySpecificationAdapter.getApplicationName()).thenReturn("appName");
+        when(xlDeploySpecificationAdapter.getVersion()).thenReturn("v1");
+        when(xlDeploySpecificationAdapter.getUsername()).thenReturn("user");
+        when(xlDeploySpecificationAdapter.getPassword()).thenReturn("pw");
+        String responseJson = IOUtils.toString(getClass().getResourceAsStream("/not-found-xldeploy.json"), UTF_8);
+        when(restClientResponseException.getResponseBodyAsString()).thenReturn(responseJson);
+
+        when(restTemplate.exchange(anyString(),
+                any(HttpMethod.class),
+                any(),
+                ArgumentMatchers.<Class<XLDeployResponse>>any()))
+                .thenThrow(restClientResponseException);
+
+        ArtifactCollectorException exception = assertThrows(ArtifactCollectorException.class, () -> artifactCollectorProvider.collectArtifacts(xlDeploySpecificationAdapter));
+        assertThat(exception.getExceptionType(), is(ArtifactCollectorException.Type.BAD_REQUEST));
+        assertThat(exception.getMessage(), is("ERROR:root:ERROR: On Application [] version [] not found"));
+    }
+
+    @Test
+    void collectArtifactsWithIncorrectCredentialsShouldReturnBadRequest() throws IOException {
+
+        when(xlDeploySpecificationAdapter.getApplicationName()).thenReturn("appName");
+        when(xlDeploySpecificationAdapter.getVersion()).thenReturn("v1");
+        when(xlDeploySpecificationAdapter.getUsername()).thenReturn("user");
+        when(xlDeploySpecificationAdapter.getPassword()).thenReturn("pw");
+        String responseJson = IOUtils.toString(getClass().getResourceAsStream("/not-found-xldeploy.json"), UTF_8);
+        when(restClientResponseException.getStatusText()).thenReturn("Unauthorized");
+        when(restClientResponseException.getResponseBodyAsString()).thenReturn("");
+        when(restTemplate.exchange(anyString(),
+                any(HttpMethod.class),
+                any(),
+                ArgumentMatchers.<Class<XLDeployResponse>>any()))
+                .thenThrow(restClientResponseException);
+
+        ArtifactCollectorException exception = assertThrows(ArtifactCollectorException.class, () -> artifactCollectorProvider.collectArtifacts(xlDeploySpecificationAdapter));
+        assertThat(exception.getExceptionType(), is(ArtifactCollectorException.Type.BAD_REQUEST));
+        assertThat(exception.getMessage(), is("Unauthorized"));
     }
 }

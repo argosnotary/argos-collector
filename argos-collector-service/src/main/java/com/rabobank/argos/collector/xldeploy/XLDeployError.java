@@ -13,26 +13,17 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.rabobank.argos.collector;
+package com.rabobank.argos.collector.xldeploy;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
+@NoArgsConstructor
 @Getter
-public class ArtifactCollectorException extends RuntimeException {
-    public enum Type {BAD_REQUEST, SERVER_ERROR}
-
-    private Type exceptionType = Type.SERVER_ERROR;
-
-    public ArtifactCollectorException(Type exceptionType, String message) {
-        super(message);
-        this.exceptionType = exceptionType;
-    }
-
-    public ArtifactCollectorException(String message) {
-        super(message);
-    }
-
-    public ArtifactCollectorException(String mesage, Exception e) {
-        super(mesage, e);
-    }
+@Setter
+@JsonIgnoreProperties(ignoreUnknown = true)
+public class XLDeployError {
+    private String stdout;
 }

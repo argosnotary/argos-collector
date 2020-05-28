@@ -1,17 +1,74 @@
 {
-  "request": {
-    "method": "GET",
-    "urlPath": "/api/extension/argosnotary/collectartifacts",
-    "basicAuthCredentials": {
-      "username": "admin",
-      "password": "adm1n"
-    }
-  },
-  "response": {
-    "status": 200,
-    "headers": {
-      "Content-Type": "application/json; charset=utf-8;"
+  "mappings": [
+    {
+      "priority": 1,
+      "request": {
+        "method": "GET",
+        "url": "/api/extension/argosnotary/collectartifacts?application=application&version=version",
+        "basicAuthCredentials": {
+          "username": "admin",
+          "password": "adm1n"
+        }
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "Content-Type": "application/json; charset=utf-8;"
+        },
+        "bodyFileName": "xldeploy-argos-collector-response.json"
+      }
     },
-    "bodyFileName": "xldeploy-argos-collector-response.json"
-  }
+    {
+      "priority": 2,
+      "request": {
+        "method": "GET",
+        "urlPath": "/api/extension/argosnotary/collectartifacts",
+        "basicAuthCredentials": {
+          "username": "admin",
+          "password": "adm1n"
+        },
+        "queryParameters": {
+          "application": {
+            "matches": "[a-z]*"
+          },
+          "version": {
+            "matches": "[a-z]*"
+          }
+        }
+      },
+      "response": {
+        "status": 404,
+        "headers": {
+          "Content-Type": "application/json; charset=utf-8;"
+        },
+        "bodyFileName": "xldeploy-argos-collector-error-not-found.json"
+      }
+    },
+    {
+      "priority": 3,
+      "request": {
+        "method": "GET",
+        "urlPath": "/api/extension/argosnotary/collectartifacts",
+        "headers": {
+          "Authorization": {
+            "matches": ".*"
+          }
+        },
+        "queryParameters": {
+          "application": {
+            "matches": "[a-z]*"
+          },
+          "version": {
+            "matches": "[a-z]*"
+          }
+        }
+      },
+      "response": {
+        "status": 401,
+        "headers": {
+          "Content-Type": "application/json; charset=utf-8;"
+        }
+      }
+    }
+  ]
 }

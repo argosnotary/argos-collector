@@ -15,6 +15,9 @@
  */
 package com.rabobank.argos.collector.xldeploy;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.rabobank.argos.collector.ArtifactCollectorException;
 import com.rabobank.argos.collector.ArtifactCollectorProvider;
 import com.rabobank.argos.collector.XLDeploySpecificationAdapter;
 import com.rabobank.argos.collector.rest.api.model.Artifact;
@@ -27,10 +30,13 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
+import org.springframework.web.client.RestClientResponseException;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import java.util.List;
+
+import static java.util.Objects.requireNonNull;
 
 @Component
 @Slf4j
@@ -41,15 +47,29 @@ public class ArtifactCollectorProviderImpl implements ArtifactCollectorProvider<
     @Value("${argos-collector.collectortypes.xldeploy.baseurl}")
     private String xlDeployBaseUrl;
     private final RestTemplate restTemplate;
+    private final ObjectMapper objectMapper = new ObjectMapper();
 
     @Override
     public List<Artifact> collectArtifacts(XLDeploySpecificationAdapter specificationAdapter) {
-        log.info("collecting artifacts with :" + XLDEPLOY + " collector");
+        log.debug("collecting artifacts with :" + XLDEPLOY + " collector");
         HttpHeaders headers = createHeaders(specificationAdapter);
         HttpEntity request = new HttpEntity(headers);
         String xlDeployUrl = createResourceUrl(specificationAdapter);
-        ResponseEntity<XLDeployResponse> response = restTemplate.exchange(xlDeployUrl, HttpMethod.GET, request, XLDeployResponse.class);
-        return response.getBody().getEntity();
+        try {
+            ResponseEntity<XLDeployResponse> response = restTemplate.exchange(xlDeployUrl, HttpMethod.GET, request, XLDeployResponse.class);
+            return requireNonNull(response.getBody()).getEntity();
+        } catch (RestClientResponseException e) {
+            String message;
+            try {
+                message = objectMapper
+                        .readValue(e.getResponseBodyAsString(), XLDeployError.class)
+                        .getStdout();
+            } catch (JsonProcessingException ex) {
+                message = e.getStatusText();
+                log.debug(ex.getMessage());
+            }
+            throw new ArtifactCollectorException(ArtifactCollectorException.Type.BAD_REQUEST, message);
+        }
     }
 
     private String createResourceUrl(XLDeploySpecificationAdapter specificationAdapter) {
