@@ -16,8 +16,6 @@
 package com.rabobank.argos.collector;
 
 import com.rabobank.argos.collector.rest.api.model.Error;
-import com.rabobank.argos.collector.rest.api.model.ValidationError;
-import com.rabobank.argos.collector.rest.api.model.ValidationMessage;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
@@ -25,9 +23,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import static org.springframework.http.MediaType.APPLICATION_JSON;
 
@@ -37,37 +32,26 @@ import static org.springframework.http.MediaType.APPLICATION_JSON;
 public class RestServiceExceptionHandler {
 
     @ExceptionHandler(value = {ArtifactCollectorValidationException.class})
-    public ResponseEntity<ValidationError> handleValidationError(ArtifactCollectorValidationException exception) {
+    public ResponseEntity<Error> handleValidationError(ArtifactCollectorValidationException exception) {
         return ResponseEntity.badRequest().contentType(APPLICATION_JSON).body(createValidationError(exception));
     }
 
     @ExceptionHandler(value = {ArtifactCollectorException.class})
-    public ResponseEntity<ValidationError> handleArtifactCollectorError(ArtifactCollectorException exception) {
-        if (ArtifactCollectorException.Type.BAD_REQUEST == exception.getExceptionType()) {
-            return ResponseEntity.badRequest().contentType(APPLICATION_JSON).body(createValidationError(exception));
-        } else {
-            log.error("{}", exception.getMessage(), exception);
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
-        }
-    }
-
-    private ValidationError createValidationError(ArtifactCollectorException exception) {
-        return new ValidationError()
-                .addMessagesItem(new ValidationMessage()
-                        .message(exception.getMessage()));
+    public ResponseEntity<Error> handleArtifactCollectorError(ArtifactCollectorException exception) {
+        return createErrorResponse(exception, HttpStatus.BAD_REQUEST);
     }
 
     @ExceptionHandler(value = {RuntimeException.class})
     public ResponseEntity<Error> handleRuntimeException(RuntimeException e) {
         log.error("{}", e.getMessage(), e);
-        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                .body(new Error().message(e.getMessage()));
+        return createErrorResponse(e, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
-    private ValidationError createValidationError(ArtifactCollectorValidationException ex) {
-        ValidationError validationError = new ValidationError();
-        List<ValidationMessage> validationMessages = new ArrayList<>(ex.getValidationMessages());
-        validationError.setMessages(validationMessages);
-        return validationError;
+    private ResponseEntity<Error> createErrorResponse(RuntimeException e, HttpStatus status) {
+        return ResponseEntity.status(status).contentType(APPLICATION_JSON).body(new Error().message(e.getMessage()));
+    }
+
+    private Error createValidationError(ArtifactCollectorValidationException ex) {
+        return new Error().message(String.join(", ", ex.getValidationMessages()));
     }
 }

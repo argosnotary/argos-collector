@@ -15,7 +15,6 @@
  */
 package com.rabobank.argos.collector;
 
-import com.rabobank.argos.collector.rest.api.model.ValidationMessage;
 import com.rabobank.argos.collector.xldeploy.XLDeploySpecificationAdapter;
 
 import javax.validation.ConstraintViolation;
@@ -47,20 +46,17 @@ public enum ArtifactCollectorType {
     }
 
     public <T extends SpecificationAdapter> void validate(T specificationAdapter, Validator validator) {
-        List<ValidationMessage> validationMessages = validateInput(validator, specificationAdapter);
+        List<String> validationMessages = validateInput(validator, specificationAdapter);
         if (!validationMessages.isEmpty()) {
             throw new ArtifactCollectorValidationException(validationMessages);
         }
     }
 
-    private List<ValidationMessage> validateInput(Validator validator, SpecificationAdapter specificationAdapter) {
+    private List<String> validateInput(Validator validator, SpecificationAdapter specificationAdapter) {
         return validator.validate(specificationAdapter).stream()
                 .sorted(Comparator.comparing((ConstraintViolation<? extends SpecificationAdapter> cv) -> cv.getPropertyPath().toString())
                         .thenComparing(ConstraintViolation::getMessage))
-                .map(error -> new ValidationMessage()
-                        .field(error.getPropertyPath().toString())
-                        .message(error.getMessage())
-                )
+                .map(error -> error.getPropertyPath().toString() + " : " + error.getMessage())
                 .collect(Collectors.toList());
     }
 }

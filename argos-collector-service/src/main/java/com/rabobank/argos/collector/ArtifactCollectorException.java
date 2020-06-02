@@ -15,24 +15,13 @@
  */
 package com.rabobank.argos.collector;
 
-import lombok.Getter;
-
-@Getter
 public class ArtifactCollectorException extends RuntimeException {
-    public enum Type {BAD_REQUEST, SERVER_ERROR}
-
-    private Type exceptionType = Type.SERVER_ERROR;
-
-    public ArtifactCollectorException(Type exceptionType, String message) {
-        super(message);
-        this.exceptionType = exceptionType;
-    }
 
     public ArtifactCollectorException(String message) {
         super(message);
     }
 
-    public ArtifactCollectorException(String mesage, Exception e) {
-        super(mesage, e);
+    public ArtifactCollectorException(String message, Exception e) {
+        super(message, e);
     }
 }

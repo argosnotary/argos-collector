@@ -16,8 +16,6 @@
 package com.rabobank.argos.collector;
 
 import com.rabobank.argos.collector.rest.api.model.Error;
-import com.rabobank.argos.collector.rest.api.model.ValidationError;
-import com.rabobank.argos.collector.rest.api.model.ValidationMessage;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -26,10 +24,9 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
-import java.util.Collections;
+import java.util.List;
 
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.is;
 import static org.mockito.Mockito.when;
 
@@ -52,30 +49,18 @@ class RestServiceExceptionHandlerTest {
     @Test
     void handleValidationErrorShouldReturnBadRequest() {
         when(artifactCollectorValidationException.getValidationMessages())
-                .thenReturn(Collections.singletonList(new ValidationMessage().field("field").message("message")));
-        ResponseEntity<ValidationError> errorResponseEntity = restServiceExceptionHandler.handleValidationError(artifactCollectorValidationException);
+                .thenReturn(List.of("message 1", "message 2"));
+        ResponseEntity<Error> errorResponseEntity = restServiceExceptionHandler.handleValidationError(artifactCollectorValidationException);
         assertThat(errorResponseEntity.getStatusCode(), is(HttpStatus.BAD_REQUEST));
-        assertThat(errorResponseEntity.getBody().getMessages(), hasSize(1));
-    }
-
-    @Test
-    void handleArtifactCollectorErrorWithTypeServerErrorShouldReturnServerError() {
-        when(artifactCollectorException.getExceptionType())
-                .thenReturn(ArtifactCollectorException.Type.SERVER_ERROR);
-        when(artifactCollectorException.getMessage()).thenReturn("message");
-        ResponseEntity<ValidationError> errorResponseEntity = restServiceExceptionHandler.handleArtifactCollectorError(artifactCollectorException);
-        assertThat(errorResponseEntity.getStatusCode(), is(HttpStatus.INTERNAL_SERVER_ERROR));
+        assertThat(errorResponseEntity.getBody().getMessage(), is("message 1, message 2"));
     }
 
     @Test
     void handleArtifactCollectorErrorWithTypeBadRequestShouldReturnBadRequest() {
-        when(artifactCollectorException.getExceptionType())
-                .thenReturn(ArtifactCollectorException.Type.BAD_REQUEST);
         when(artifactCollectorException.getMessage()).thenReturn("message");
-        ResponseEntity<ValidationError> errorResponseEntity = restServiceExceptionHandler.handleArtifactCollectorError(artifactCollectorException);
+        ResponseEntity<Error> errorResponseEntity = restServiceExceptionHandler.handleArtifactCollectorError(artifactCollectorException);
         assertThat(errorResponseEntity.getStatusCode(), is(HttpStatus.BAD_REQUEST));
-        assertThat(errorResponseEntity.getBody().getMessages(), hasSize(1));
-        assertThat(errorResponseEntity.getBody().getMessages().get(0).getMessage(), is("message"));
+        assertThat(errorResponseEntity.getBody().getMessage(), is("message"));
     }
 
     @Test

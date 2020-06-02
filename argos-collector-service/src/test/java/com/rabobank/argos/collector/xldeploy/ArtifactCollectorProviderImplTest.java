@@ -119,7 +119,6 @@ class ArtifactCollectorProviderImplTest {
                 .thenThrow(restClientResponseException);
 
         ArtifactCollectorException exception = assertThrows(ArtifactCollectorException.class, () -> artifactCollectorProvider.collectArtifacts(xlDeploySpecificationAdapter));
-        assertThat(exception.getExceptionType(), is(ArtifactCollectorException.Type.BAD_REQUEST));
         assertThat(exception.getMessage(), is("ERROR:root:ERROR: On Application [] version [] not found"));
     }
 
@@ -140,7 +139,6 @@ class ArtifactCollectorProviderImplTest {
                 .thenThrow(restClientResponseException);
 
         ArtifactCollectorException exception = assertThrows(ArtifactCollectorException.class, () -> artifactCollectorProvider.collectArtifacts(xlDeploySpecificationAdapter));
-        assertThat(exception.getExceptionType(), is(ArtifactCollectorException.Type.BAD_REQUEST));
         assertThat(exception.getMessage(), is("Unauthorized"));
     }
 }

@@ -15,7 +15,6 @@
  */
 package com.rabobank.argos.collector;
 
-import com.rabobank.argos.collector.rest.api.model.ValidationMessage;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
@@ -24,5 +23,5 @@ import java.util.List;
 @RequiredArgsConstructor
 @Getter
 public class ArtifactCollectorValidationException extends RuntimeException {
-    private final transient List<ValidationMessage> validationMessages;
+    private final transient List<String> validationMessages;
 }

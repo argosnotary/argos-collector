@@ -1,7 +1,3 @@
 {
-  "messages": [
-    {
-      "message": "ERROR:root:ERROR: On Application [string] version [string] not found"
-    }
-  ]
+  "message": "ERROR:root:ERROR: On Application [string] version [string] not found"
 }
