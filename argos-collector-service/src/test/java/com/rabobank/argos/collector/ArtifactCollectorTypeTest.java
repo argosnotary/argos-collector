@@ -68,8 +68,7 @@ class ArtifactCollectorTypeTest {
         ArtifactCollectorValidationException artifactCollectorValidationException = assertThrows(ArtifactCollectorValidationException.class,
                 () -> artifactCollectorType.validate(specificationAdapter, validator));
         assertThat(artifactCollectorValidationException.getValidationMessages(), hasSize(1));
-        assertThat(artifactCollectorValidationException.getValidationMessages().get(0).getField(), is(PATH));
-        assertThat(artifactCollectorValidationException.getValidationMessages().get(0).getMessage(), is(MESSAGE));
+        assertThat(artifactCollectorValidationException.getValidationMessages().get(0), is(PATH + " : " + MESSAGE));
     }
 
     @Test

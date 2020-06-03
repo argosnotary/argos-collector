@@ -67,7 +67,7 @@ public class ArtifactCollectorProviderImpl implements ArtifactCollectorProvider<
                 message = e.getStatusText();
                 log.debug(ex.getMessage());
             }
-            throw new ArtifactCollectorException(ArtifactCollectorException.Type.BAD_REQUEST, message);
+            throw new ArtifactCollectorException(message);
         }
     }
 
