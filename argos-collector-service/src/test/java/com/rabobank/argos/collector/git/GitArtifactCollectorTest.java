@@ -57,10 +57,11 @@ class GitArtifactCollectorTest {
     @Test
     void collectArtifactsFromCommitHash() {
         when(spec.getRepository()).thenReturn("argosnotary/argos-collector");
-        when(spec.getCommitHash()).thenReturn("b65f29a");
+        when(spec.getCommitHash()).thenReturn("39955");
         List<Artifact> artifacts = gitArtifactCollector.collectArtifacts(spec);
         assertThat(artifacts.get(0).getHash(), is("dcc1d61ea0ca0dedf6456f467d4c832743f68ea0144ec638a740ab231e3e4ee2"));
         assertThat(artifacts.get(0).getUri(), is(".gitignore"));
+        assertThat(artifacts.size(), is(17));
     }
 
     @Test
@@ -77,6 +78,13 @@ class GitArtifactCollectorTest {
         when(spec.getBranch()).thenReturn("branzz");
         ArtifactCollectorException exception = assertThrows(ArtifactCollectorException.class, () -> gitArtifactCollector.collectArtifacts(spec));
         assertThat(exception.getMessage(), is("refs/heads/branzz not found"));
+    }
+
+    @Test
+    void collectArtifactsNoInfo() {
+        when(spec.getRepository()).thenReturn("argosnotary/argos-collector");
+        ArtifactCollectorException exception = assertThrows(ArtifactCollectorException.class, () -> gitArtifactCollector.collectArtifacts(spec));
+        assertThat(exception.getMessage(), is("no commitHash or tag or branch specified"));
     }
 
     @Test

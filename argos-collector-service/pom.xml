@@ -510,7 +510,7 @@
                             <threads>4</threads>
                             <timeoutConstant>10000</timeoutConstant>
                             <timestampedReports>false</timestampedReports>
-                            <mutationThreshold>85</mutationThreshold>
+                            <mutationThreshold>73</mutationThreshold>
                             <coverageThreshold>85</coverageThreshold>
                             <failWhenNoMutations>true</failWhenNoMutations>
                             <reportsDirectory>${project.build.directory}/pi-report</reportsDirectory>
