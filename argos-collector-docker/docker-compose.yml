@@ -37,6 +37,19 @@ services:
     ports:
       - 8080:8080
 
+  argos-xldeploy-collector-service-git:
+    build:
+      context: .
+      dockerfile: ArgosCollectorDockerFile
+      args:
+        - VERSION=compose
+    environment:
+      spring.profiles.active: GIT
+      argos-collector.collectortypes.git.baseurl: https://github.com
+      JAVA_OPTS: '-Xmx1g'
+    ports:
+      - 8081:8080
+
   xl-deploy-stub:
     build:
       context: xl-deploy-stub

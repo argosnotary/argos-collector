@@ -32,14 +32,19 @@ public class ServiceStatusHelper {
 
     private static Properties properties = Properties.getInstance();
 
-    public static void waitForXlDeployCollectorServiceToStart() {
-        log.info("Waiting for argos xldeploy collector service start");
+    public static void waitForCollectorServicesToStart() {
+        waitToStart("xldeploy", properties.getApiXLDeployBaseUrl() + "/actuator/health");
+        waitToStart("git", properties.getApiGitBaseUrl() + "/actuator/health");
+    }
+
+    private static void waitToStart(String serviceName, String url) {
+        log.info("Waiting for argos {} collector service start", serviceName);
         HttpClient client = HttpClient.newHttpClient();
         await().atMost(1, MINUTES).until(() -> {
             try {
                 log.debug(properties.getApiXLDeployBaseUrl());
                 HttpRequest request = HttpRequest.newBuilder()
-                        .uri(URI.create(properties.getApiXLDeployBaseUrl() + "/actuator/health"))
+                        .uri(URI.create(url))
                         .build();
                 HttpResponse<String> send = client.send(request, HttpResponse.BodyHandlers.ofString());
                 return 200 == send.statusCode();
@@ -49,7 +54,7 @@ public class ServiceStatusHelper {
             }
         });
 
-        log.info("argos xldeploy collector service started");
+        log.info("argos {} collector service started", serviceName);
     }
 
 }
