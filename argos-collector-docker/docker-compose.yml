@@ -37,7 +37,7 @@ services:
     ports:
       - 8080:8080
 
-  argos-xldeploy-collector-service-git:
+  argos-git-collector-service:
     build:
       context: .
       dockerfile: ArgosCollectorDockerFile
