@@ -306,6 +306,8 @@
                             <systemPropertyVariables>
                                 <argos-collector.xldeploy.rest-api.base-url>http://argos-xldeploy-collector-service:8080
                                 </argos-collector.xldeploy.rest-api.base-url>
+                                <argos-collector.git.rest-api.base-url>http://argos-git-collector-service:8080
+                                </argos-collector.git.rest-api.base-url>
                             </systemPropertyVariables>
                         </configuration>
                     </plugin>

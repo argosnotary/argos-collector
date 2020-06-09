@@ -22,6 +22,7 @@ import lombok.Getter;
 public class Properties {
 
     private final String apiXLDeployBaseUrl;
+    private final String apiGitBaseUrl;
     private static Properties INSTANCE;
 
 
@@ -35,6 +36,7 @@ public class Properties {
     private Properties() {
         Config conf = ConfigFactory.load();
         apiXLDeployBaseUrl = conf.getString("argos-collector.xldeploy.rest-api.base-url");
+        apiGitBaseUrl = conf.getString("argos-collector.git.rest-api.base-url");
     }
 }
 

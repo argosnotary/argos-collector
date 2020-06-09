@@ -78,6 +78,16 @@ steps:
     depends_on:
       - build argos collector service image
 
+  - name: argos-git-collector-service
+    image: argosnotary/argos-collector-service-snapshot:${DRONE_BRANCH/\//_}${DRONE_TAG}
+    pull: always
+    detach: true
+    environment:
+      spring.profiles.active: GIT
+      argos-collector.collectortypes.git.baseurl: https://github.com
+    depends_on:
+      - build argos collector service image
+
   - name: argos-collector-xl-deploy-stub
     image: argosnotary/argos-collector-xl-deploy-stub:${DRONE_BRANCH/\//_}${DRONE_TAG}
     pull: always
@@ -95,6 +105,7 @@ steps:
         path: /root/.m2/repository
     depends_on:
       - argos-xldeploy-collector-service
+      - argos-git-collector-service
       - argos-collector-xl-deploy-stub
 
   - name: sign artifacts

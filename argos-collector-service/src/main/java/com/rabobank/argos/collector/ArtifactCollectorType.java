@@ -15,6 +15,7 @@
  */
 package com.rabobank.argos.collector;
 
+import com.rabobank.argos.collector.git.GitSpecificationAdapter;
 import com.rabobank.argos.collector.xldeploy.XLDeploySpecificationAdapter;
 
 import javax.validation.ConstraintViolation;
@@ -28,7 +29,8 @@ import java.util.stream.Collectors;
 
 
 public enum ArtifactCollectorType {
-    XLDEPLOY(XLDeploySpecificationAdapter.class);
+    XLDEPLOY(XLDeploySpecificationAdapter.class),
+    GIT(GitSpecificationAdapter.class);
     private Class<? extends SpecificationAdapter> validationAdapterClass;
 
     ArtifactCollectorType(Class<? extends SpecificationAdapter> validationAdapterClass) {

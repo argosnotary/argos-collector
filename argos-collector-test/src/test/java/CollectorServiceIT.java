@@ -21,17 +21,24 @@ import org.junit.jupiter.api.BeforeAll;
 @Slf4j
 public class CollectorServiceIT {
     private static final String SERVER_XLDEPLOY_BASEURL = "server.xldeploy.baseurl";
-    private static Properties properties = Properties.getInstance();
+    private static final String SERVER_GIT_BASEURL = "server.git.baseurl";
+    private static final Properties properties = Properties.getInstance();
 
     @BeforeAll
     static void setup() {
         System.setProperty(SERVER_XLDEPLOY_BASEURL, properties.getApiXLDeployBaseUrl());
-        ServiceStatusHelper.waitForXlDeployCollectorServiceToStart();
+        System.setProperty(SERVER_GIT_BASEURL, properties.getApiGitBaseUrl());
+        ServiceStatusHelper.waitForCollectorServicesToStart();
     }
 
     @Karate.Test
     Karate xldeployCollector() {
         return new Karate().feature("classpath:feature/xldeploy-collect.feature");
+    }
+
+    @Karate.Test
+    Karate gitCollector() {
+        return new Karate().feature("classpath:feature/git-collect.feature");
     }
 
 }
