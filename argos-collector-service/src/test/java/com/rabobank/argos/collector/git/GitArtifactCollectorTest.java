@@ -47,7 +47,7 @@ class GitArtifactCollectorTest {
 
     @Test
     void collectArtifactsFromBranch() {
-        when(spec.getRepository()).thenReturn("argosnotary/argos-collector");
+        when(spec.getRepository()).thenReturn("/argosnotary/argos-collector");
         when(spec.getBranch()).thenReturn("master");
         List<Artifact> artifacts = gitArtifactCollector.collectArtifacts(spec);
         assertThat(artifacts.get(0).getHash(), is("32624a6e579e2efd2e3b87d4c83bd825ee82b546d52b352704f91b010c7fc770"));

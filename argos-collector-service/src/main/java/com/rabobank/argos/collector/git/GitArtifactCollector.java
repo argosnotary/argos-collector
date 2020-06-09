@@ -42,6 +42,8 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 
+import static org.springframework.web.util.UriComponentsBuilder.fromHttpUrl;
+
 @Component
 @Profile(GitArtifactCollector.GIT)
 public class GitArtifactCollector implements ArtifactCollectorProvider<GitSpecificationAdapter> {
@@ -101,11 +103,13 @@ public class GitArtifactCollector implements ArtifactCollectorProvider<GitSpecif
     }
 
     private InMemoryRepository getInMemoryRepository(GitSpecificationAdapter spec) {
+
+        String repoUrl = fromHttpUrl(gitBaseUrl).path("/").path(spec.getRepository()).build().toUriString();
         DfsRepositoryDescription repoDesc = new DfsRepositoryDescription();
         InMemoryRepository repo = new InMemoryRepository(repoDesc);
         try (Git git = new Git(repo)) {
             git.fetch().setCredentialsProvider(getCredentialsProvider(spec))
-                    .setRemote(gitBaseUrl + "/" + spec.getRepository())
+                    .setRemote(repoUrl)
                     .setRefSpecs(new RefSpec("+refs/heads/*:refs/heads/*"))
                     .setTagOpt(Optional.ofNullable(spec.getTag()).map(tag -> TagOpt.FETCH_TAGS).orElse(TagOpt.NO_TAGS))
                     .call();
