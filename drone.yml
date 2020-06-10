@@ -107,6 +107,25 @@ steps:
       - argos-xldeploy-collector-service
       - argos-git-collector-service
       - argos-collector-xl-deploy-stub
+      
+  - name: build argos collector service image
+    image: plugins/docker
+    settings:
+      context: argos-collector-docker
+      dockerfile: argos-collector-docker/ArgosCollectorDockerFile
+      password:
+        from_secret: docker_login_token
+      username:
+        from_secret: docker_login_user
+      repo: argosnotary/argos-collector-service
+      tags:
+      - ${DRONE_TAG}
+      - latest
+    when:
+      event:
+      - tag
+    depends_on:
+    - regression test
 
   - name: sign artifacts
     image: plugins/gpgsign
