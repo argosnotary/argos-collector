@@ -23,7 +23,7 @@ Feature: XLDeploy
 
   Scenario: collect artifacts on git with valid request should return a 200
     Given path '/api/collector/artifacts'
-    And request {repository:'argosnotary/argos-collector', commitHash:'b65f29a'}
+    And request {repository:'argosnotary/argos-collector', commitHash:'39955'}
     When method POST
     Then status 200
     * def expectedResponse = read('classpath:testmessages/git/ok-response.json')
