@@ -37,6 +37,9 @@ import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.nio.file.FileSystems;
+import java.nio.file.Path;
+import java.nio.file.PathMatcher;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -47,6 +50,8 @@ import static org.springframework.web.util.UriComponentsBuilder.fromHttpUrl;
 @Component
 @Profile(GitArtifactCollector.GIT)
 public class GitArtifactCollector implements ArtifactCollectorProvider<GitSpecificationAdapter> {
+    public static final String DEFAULT_EXCLUDE_PATTERNS = "**.{git,link}**";
+
     static final String GIT = "GIT";
 
     @Value("${argos-collector.collectortypes.git.baseurl}")
@@ -54,6 +59,9 @@ public class GitArtifactCollector implements ArtifactCollectorProvider<GitSpecif
 
     @Override
     public List<Artifact> collectArtifacts(GitSpecificationAdapter spec) {
+
+        PathMatcher excludeMatcher = FileSystems.getDefault().getPathMatcher("glob:" + DEFAULT_EXCLUDE_PATTERNS);
+
         List<Artifact> artifacts = new ArrayList<>();
         InMemoryRepository repo = getInMemoryRepository(spec);
         RevCommit commit = getRevCommit(spec, repo);
@@ -61,10 +69,12 @@ public class GitArtifactCollector implements ArtifactCollectorProvider<GitSpecif
             treeWalk.addTree(commit.getTree());
             treeWalk.setRecursive(true);
             while (treeWalk.next()) {
-                try (InputStream fileStream = repo.open(treeWalk.getObjectId(0)).openStream()) {
-                    artifacts.add(new Artifact()
-                            .uri(treeWalk.getPathString())
-                            .hash(DigestUtils.sha256Hex(fileStream)));
+                if (!excludeMatcher.matches(Path.of(treeWalk.getPathString()))) {
+                    try (InputStream fileStream = repo.open(treeWalk.getObjectId(0)).openStream()) {
+                        artifacts.add(new Artifact()
+                                .uri(treeWalk.getPathString())
+                                .hash(DigestUtils.sha256Hex(fileStream)));
+                    }
                 }
             }
         } catch (IOException e) {

@@ -50,8 +50,8 @@ class GitArtifactCollectorTest {
         when(spec.getRepository()).thenReturn("/argosnotary/argos-collector");
         when(spec.getBranch()).thenReturn("master");
         List<Artifact> artifacts = gitArtifactCollector.collectArtifacts(spec);
-        assertThat(artifacts.get(0).getHash(), is("32624a6e579e2efd2e3b87d4c83bd825ee82b546d52b352704f91b010c7fc770"));
-        assertThat(artifacts.get(0).getUri(), is(".gitignore"));
+        assertThat(artifacts.get(0).getHash(), is("c71d239df91726fc519c6eb72d318ec65820627232b2f796219e87dcf35d0ab4"));
+        assertThat(artifacts.get(0).getUri(), is("LICENSE"));
     }
 
     @Test
@@ -59,9 +59,9 @@ class GitArtifactCollectorTest {
         when(spec.getRepository()).thenReturn("argosnotary/argos-collector");
         when(spec.getCommitHash()).thenReturn("39955");
         List<Artifact> artifacts = gitArtifactCollector.collectArtifacts(spec);
-        assertThat(artifacts.get(0).getHash(), is("dcc1d61ea0ca0dedf6456f467d4c832743f68ea0144ec638a740ab231e3e4ee2"));
-        assertThat(artifacts.get(0).getUri(), is(".gitignore"));
-        assertThat(artifacts.size(), is(17));
+        assertThat(artifacts.get(0).getHash(), is("83f2eb37314433494a5bff1d054b27b244f10de377d51552a58ec9426e202981"));
+        assertThat(artifacts.get(0).getUri(), is("argos-collector-api/api.yml"));
+        assertThat(artifacts.size(), is(16));
     }
 
     @Test
@@ -112,8 +112,8 @@ class GitArtifactCollectorTest {
         when(spec.getPassword()).thenReturn("pazz");
         when(spec.getUsername()).thenReturn("uzer");
         List<Artifact> artifacts = gitArtifactCollector.collectArtifacts(spec);
-        assertThat(artifacts.get(0).getHash(), is("32624a6e579e2efd2e3b87d4c83bd825ee82b546d52b352704f91b010c7fc770"));
-        assertThat(artifacts.get(0).getUri(), is(".gitignore"));
+        assertThat(artifacts.get(0).getHash(), is("c71d239df91726fc519c6eb72d318ec65820627232b2f796219e87dcf35d0ab4"));
+        assertThat(artifacts.get(0).getUri(), is("LICENSE"));
     }
 
 }
