@@ -108,7 +108,7 @@ steps:
       - argos-git-collector-service
       - argos-collector-xl-deploy-stub
       
-  - name: build argos collector service image
+  - name: release argos collector service image
     image: plugins/docker
     settings:
       context: argos-collector-docker
