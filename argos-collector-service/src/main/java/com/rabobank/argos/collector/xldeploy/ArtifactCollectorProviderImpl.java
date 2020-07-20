@@ -74,7 +74,7 @@ public class ArtifactCollectorProviderImpl implements ArtifactCollectorProvider<
     private String createResourceUrl(XLDeploySpecificationAdapter specificationAdapter) {
         return UriComponentsBuilder.fromHttpUrl(xlDeployBaseUrl + "/api/extension/argosnotary/collectartifacts")
                 .queryParam("application", specificationAdapter.getApplicationName())
-                .queryParam("version", specificationAdapter.getVersion()).toUriString();
+                .queryParam("version", specificationAdapter.getApplicationVersion()).toUriString();
     }
 
     private HttpHeaders createHeaders(XLDeploySpecificationAdapter specificationAdapter) {

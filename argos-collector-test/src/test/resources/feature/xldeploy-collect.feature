@@ -23,7 +23,7 @@ Feature: XLDeploy
 
   Scenario: collect artifacts on xldeploy with valid request should return a 200
     Given path '/api/collector/artifacts'
-    And request {applicationName:'application',version:'version',username:'admin',password:'adm1n'}
+    And request {applicationName:'application',applicationVersion:'version',username:'admin',password:'adm1n'}
     When method POST
     Then status 200
     * def expectedResponse = read('classpath:testmessages/xldeploy/ok-response.json')
@@ -31,7 +31,7 @@ Feature: XLDeploy
 
   Scenario: collect artifacts on xldeploy with incorrect request should return a 400
     Given path '/api/collector/artifacts'
-    And request {applicationName:'string',version:'string',username:'admin',password:'adm1n'}
+    And request {applicationName:'string',applicationVersion:'string',username:'admin',password:'adm1n'}
     When method POST
     Then status 400
     * def expectedResponse = read('classpath:testmessages/xldeploy/bad-request-not-found.json')
@@ -39,7 +39,7 @@ Feature: XLDeploy
 
   Scenario: collect artifacts on xldeploy with incorrect credentials should return a 400
     Given path '/api/collector/artifacts'
-    And request {applicationName:'string',version:'string',username:'wrong',password:'wrong'}
+    And request {applicationName:'string',applicationVersion:'string',username:'wrong',password:'wrong'}
     When method POST
     Then status 400
     * def expectedResponse = read('classpath:testmessages/xldeploy/bad-request-not-authorized.json')

@@ -80,7 +80,7 @@ class ArtifactCollectorProviderImplTest {
         Artifact artifact = new Artifact().hash("hash").uri("http://uit.nl");
         xlDeployResponse.setEntity(Collections.singletonList(artifact));
         when(xlDeploySpecificationAdapter.getApplicationName()).thenReturn("appName");
-        when(xlDeploySpecificationAdapter.getVersion()).thenReturn("v1");
+        when(xlDeploySpecificationAdapter.getApplicationVersion()).thenReturn("v1");
         when(xlDeploySpecificationAdapter.getUsername()).thenReturn("user");
         when(xlDeploySpecificationAdapter.getPassword()).thenReturn("pw");
         when(restTemplate.exchange(anyString(),
@@ -106,7 +106,7 @@ class ArtifactCollectorProviderImplTest {
     void collectArtifactsWithIncorrectQueryParamsShouldReturnBadRequest() throws IOException {
 
         when(xlDeploySpecificationAdapter.getApplicationName()).thenReturn("appName");
-        when(xlDeploySpecificationAdapter.getVersion()).thenReturn("v1");
+        when(xlDeploySpecificationAdapter.getApplicationVersion()).thenReturn("v1");
         when(xlDeploySpecificationAdapter.getUsername()).thenReturn("user");
         when(xlDeploySpecificationAdapter.getPassword()).thenReturn("pw");
         String responseJson = IOUtils.toString(getClass().getResourceAsStream("/not-found-xldeploy.json"), UTF_8);
@@ -126,7 +126,7 @@ class ArtifactCollectorProviderImplTest {
     void collectArtifactsWithIncorrectCredentialsShouldReturnBadRequest() throws IOException {
 
         when(xlDeploySpecificationAdapter.getApplicationName()).thenReturn("appName");
-        when(xlDeploySpecificationAdapter.getVersion()).thenReturn("v1");
+        when(xlDeploySpecificationAdapter.getApplicationVersion()).thenReturn("v1");
         when(xlDeploySpecificationAdapter.getUsername()).thenReturn("user");
         when(xlDeploySpecificationAdapter.getPassword()).thenReturn("pw");
         String responseJson = IOUtils.toString(getClass().getResourceAsStream("/not-found-xldeploy.json"), UTF_8);

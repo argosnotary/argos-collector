@@ -31,7 +31,7 @@ class XLDeploySpecificationAdapterValidationTest {
     private static final String APPLICATION_NAME = "applicationName";
     private static final String FIELD = "password";
     private static final String USER_NAME = "username";
-    private static final String VERSION = "version";
+    private static final String APPLICATION_VERSION = "applicationVersion";
     private static final String MUST_NOT_BE_NULL = "must not be null";
 
     @Test
@@ -39,18 +39,19 @@ class XLDeploySpecificationAdapterValidationTest {
         Map<String, String> specification = emptyMap();
         assertThat(validate(new XLDeploySpecificationAdapter(specification)), contains(expectedErrors(
                 APPLICATION_NAME, MUST_NOT_BE_NULL,
+                APPLICATION_VERSION, MUST_NOT_BE_NULL,
                 FIELD, MUST_NOT_BE_NULL,
-                USER_NAME, MUST_NOT_BE_NULL,
-                VERSION, MUST_NOT_BE_NULL)
+                USER_NAME, MUST_NOT_BE_NULL
+                )
         ));
     }
 
     @Test
     void validateWrongCharacters() {
-        Map<String, String> specification = Map.of(APPLICATION_NAME, "app*lication", USER_NAME, "user", FIELD, "pw", VERSION, "ver|ion");
+        Map<String, String> specification = Map.of(APPLICATION_NAME, "app*lication", USER_NAME, "user", FIELD, "pw", APPLICATION_VERSION, "ver|ion");
         assertThat(validate(new XLDeploySpecificationAdapter(specification)), contains(expectedErrors(
                 APPLICATION_NAME, "(no `/`, `\\`, `:`, `[`, `]`, `|`, `,` or `*`) characters are allowed",
-                VERSION, "(no `/`, `\\`, `:`, `[`, `]`, `|`, `,` or `*`) characters are allowed"
+                APPLICATION_VERSION, "(no `/`, `\\`, `:`, `[`, `]`, `|`, `,` or `*`) characters are allowed"
                 )
         ));
     }

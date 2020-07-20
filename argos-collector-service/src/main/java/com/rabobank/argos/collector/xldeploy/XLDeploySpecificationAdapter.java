@@ -31,9 +31,9 @@ public class XLDeploySpecificationAdapter implements SpecificationAdapter {
     @NotNull
     @Pattern(regexp = "^[^/\\\\:\\[\\]|,*]*$", message = CHARACTERS_ARE_NOT_ALLOWED)
     @Size(max = 255)
-    public String getVersion() {
+    public String getApplicationVersion() {
         return collectorSpecification
-                .getOrDefault("version", null);
+                .getOrDefault("applicationVersion", null);
     }
 
     @NotNull
