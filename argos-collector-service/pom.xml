@@ -21,7 +21,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.rabobank.argos</groupId>
     <artifactId>argos-collector-service</artifactId>
-    <version>0.0.1-RC8</version>
+    <version>1.0-SNAPSHOT</version>
     <name>Argos collector service</name>
     <description>Artifact collector service for Argos Supply Chain Notary</description>
     <url>https://github.com/argosnotary/argos-parent/argos-collector</url>
