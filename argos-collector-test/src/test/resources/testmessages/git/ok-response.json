@@ -28,27 +28,27 @@
     "hash": "6cf8aa4b7c4e9b0de3d12938c1135cbd898a3f812d71133d964ff678bd392af1"
   },
   {
-    "uri": "argos-collector-service/src/main/java/com/argosnotary/argos/collector/ArtifactCollectorProvider.java",
+    "uri": "argos-collector-service/src/main/java/com/rabobank/argos/collector/ArtifactCollectorProvider.java",
     "hash": "561a8ce60c0c4d740e0071582ef0f9d37dc71e5589adfb00bb27f8f0078b7abe"
   },
   {
-    "uri": "argos-collector-service/src/main/java/com/argosnotary/argos/collector/ArtifactCollectorRestService.java",
+    "uri": "argos-collector-service/src/main/java/com/rabobank/argos/collector/ArtifactCollectorRestService.java",
     "hash": "aa652668698a99cbde6a545df6eddf13f04d9f1193650dc21286d53244aeee7e"
   },
   {
-    "uri": "argos-collector-service/src/main/java/com/argosnotary/argos/collector/ArtifactCollectorServiceApplication.java",
+    "uri": "argos-collector-service/src/main/java/com/rabobank/argos/collector/ArtifactCollectorServiceApplication.java",
     "hash": "d898a3303d8302fab9df31360fe837073ca0d50dc9b6455132475ff6e6b9856c"
   },
   {
-    "uri": "argos-collector-service/src/main/java/com/argosnotary/argos/collector/CollectorType.java",
+    "uri": "argos-collector-service/src/main/java/com/rabobank/argos/collector/CollectorType.java",
     "hash": "2542609e7f62b4982c185f7649034a1a5519c9ae342f8ad630fe753087d54994"
   },
   {
-    "uri": "argos-collector-service/src/main/java/com/argosnotary/argos/collector/git/ArtifactCollectorProviderImpl.java",
+    "uri": "argos-collector-service/src/main/java/com/rabobank/argos/collector/git/ArtifactCollectorProviderImpl.java",
     "hash": "521ab54f4e3d55573016dab163c3d8afe3cbb1e42e60345c8a32bf86229ead00"
   },
   {
-    "uri": "argos-collector-service/src/main/java/com/argosnotary/argos/collector/xldeploy/ArtifactCollectorProviderImpl.java",
+    "uri": "argos-collector-service/src/main/java/com/rabobank/argos/collector/xldeploy/ArtifactCollectorProviderImpl.java",
     "hash": "8653242a6e2bb241439ad2c02b92cf51be06b8a9fdcfb4158e844ab5e28a7465"
   },
   {

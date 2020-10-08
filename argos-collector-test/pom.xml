@@ -18,7 +18,12 @@
 -->
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-    <modelVersion>4.0.0</modelVersion>
+    <modelVersion>4.0.0</modelVersion
+    ><parent>
+        <groupId>com.argosnotary.argos</groupId>
+        <artifactId>argos-collector</artifactId>
+        <version>1.0-SNAPSHOT</version>
+    </parent>
     <packaging>jar</packaging>
     <version>1.0-SNAPSHOT</version>
     <groupId>com.argosnotary.argos</groupId>
@@ -37,7 +42,7 @@
         <developer>
             <name>Gerard Borst</name>
             <email>gerard.borst@argosnotary.com</email>
-            <organization>Rabobank</organization>
+            <organization>Argos Notary</organization>
             <organizationUrl>https://argosnotary.github.io</organizationUrl>
         </developer>
     </developers>
@@ -49,55 +54,43 @@
     </scm>
 
     <properties>
+        <awaitility.version>4.0.3</awaitility.version>
+        <config.version>1.4.0</config.version>
+        <exec-maven-plugin.version>3.0.0</exec-maven-plugin.version>
+        <junit-jupiter.version>5.6.2</junit-jupiter.version>
+        <karate.version>0.9.6</karate.version>
+        <lombok.version>1.18.12</lombok.version>  
+        <maven-compiler-plugin.version>3.8.1</maven-compiler-plugin.version>
+        <maven-failsafe-plugin.version>2.22.2</maven-failsafe-plugin.version>
+        
+        <java.version>11</java.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <sonar.skip>true</sonar.skip>
-        <karate.version>0.9.4</karate.version>
-        <swagger-annotations-version>1.5.22</swagger-annotations-version>
-        <org.mapstruct.version>1.3.1.Final</org.mapstruct.version>
-        <lombok.version>1.18.10</lombok.version>
     </properties>
 
     <dependencies>
         <dependency>
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter</artifactId>
-            <version>5.5.2</version>
+            <version>${junit-jupiter.version}</version>
             <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.awaitility</groupId>
             <artifactId>awaitility</artifactId>
-            <version>4.0.1</version>
+            <version>${awaitility.version}</version>
             <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>io.swagger</groupId>
-            <artifactId>swagger-annotations</artifactId>
-            <version>${swagger-annotations-version}</version>
-            <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>com.typesafe</groupId>
             <artifactId>config</artifactId>
-            <version>1.3.4</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.slf4j</groupId>
-            <artifactId>slf4j-api</artifactId>
-            <version>1.7.28</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>ch.qos.logback</groupId>
-            <artifactId>logback-classic</artifactId>
-            <version>1.2.3</version>
+            <version>${config.version}</version>
             <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
-            <version>1.18.10</version>
+            <version>${lombok.version}</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
@@ -111,32 +104,17 @@
             <version>${karate.version}</version>
             <scope>test</scope>
         </dependency>
-
-
-        <dependency>
-            <groupId>com.github.tomakehurst</groupId>
-            <artifactId>wiremock</artifactId>
-            <version>2.26.3</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.commons</groupId>
-            <artifactId>commons-text</artifactId>
-            <version>1.8</version>
-        </dependency>
-
     </dependencies>
 
     <build>
         <plugins>
-
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.8.1</version>
+                <version>${maven-compiler-plugin.version}</version>
                 <configuration>
-                    <source>11</source>
-                    <target>11</target>
+                    <source>${java.version}</source>
+                    <target>${java.version}</target>
                     <annotationProcessorPaths>
                         <path>
                             <groupId>org.projectlombok</groupId>
@@ -145,59 +123,6 @@
                         </path>
                     </annotationProcessorPaths>
                 </configuration>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-toolchains-plugin</artifactId>
-                <version>3.0.0</version>
-                <executions>
-                    <execution>
-                        <goals>
-                            <goal>toolchain</goal>
-                        </goals>
-                        <configuration>
-                            <toolchains>
-                                <jdk>
-                                    <version>11</version>
-                                </jdk>
-                            </toolchains>
-                        </configuration>
-                    </execution>
-                </executions>
-            </plugin>
-            <plugin>
-                <groupId>com.mycila</groupId>
-                <artifactId>license-maven-plugin</artifactId>
-                <version>3.0</version>
-                <configuration>
-                    <quiet>false</quiet>
-                    <failIfMissing>true</failIfMissing>
-                    <strictCheck>true</strictCheck>
-                    <aggregate>false</aggregate>
-                    <excludes>
-                        <exclude>target/**</exclude>
-                        <exclude>src/test/resources/**.js</exclude>
-                        <exclude>**/bob</exclude>
-                    </excludes>
-                    <useDefaultExcludes>true</useDefaultExcludes>
-                    <header>https://raw.github.com/argosnotary/argos/master/docs/header.txt</header>
-                    <properties>
-                        <lic.year>2020</lic.year>
-                    </properties>
-                    <encoding>UTF-8</encoding>
-                    <mapping>
-                        <java>SLASHSTAR_STYLE</java>
-                        <feature>SCRIPT_STYLE</feature>
-                        <conf>SCRIPT_STYLE</conf>
-                    </mapping>
-                </configuration>
-                <executions>
-                    <execution>
-                        <goals>
-                            <goal>check</goal>
-                        </goals>
-                    </execution>
-                </executions>
             </plugin>
         </plugins>
     </build>
@@ -211,7 +136,7 @@
                     <plugin>
                         <groupId>org.codehaus.mojo</groupId>
                         <artifactId>exec-maven-plugin</artifactId>
-                        <version>1.6.0</version>
+                        <version>${exec-maven-plugin.version}</version>
                         <executions>
                             <execution>
                                 <id>docker down</id>
@@ -273,7 +198,7 @@
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-failsafe-plugin</artifactId>
-                        <version>2.22.2</version>
+                        <version>${maven-failsafe-plugin.version}</version>
                         <executions>
                             <execution>
                                 <goals>
@@ -293,7 +218,7 @@
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-failsafe-plugin</artifactId>
-                        <version>2.22.2</version>
+                        <version>${maven-failsafe-plugin.version}</version>
                         <executions>
                             <execution>
                                 <goals>

@@ -25,35 +25,29 @@ version: '3.1'
 services:
 
   argos-xldeploy-collector-service:
-    build:
-      context: .
-      dockerfile: ArgosCollectorDockerFile
-      args:
-        - VERSION=compose
+    image: argosnotary/argos-docker-base:11.0.8
     environment:
       spring.profiles.active: XLDEPLOY
       argos-collector.collectortypes.xldeploy.baseurl: http://xl-deploy-stub:8080
       JAVA_OPTS: '-Xmx1g'
+    volumes:
+      - ../argos-collector-service/target/argos-collector-service.jar:/argos.jar
     ports:
       - 8080:8080
 
   argos-git-collector-service:
-    build:
-      context: .
-      dockerfile: ArgosCollectorDockerFile
-      args:
-        - VERSION=compose
+    image: argosnotary/argos-docker-base:11.0.8
     environment:
       spring.profiles.active: GIT
       argos-collector.collectortypes.git.baseurl: https://github.com
       JAVA_OPTS: '-Xmx1g'
+    volumes:
+      - ../argos-collector-service/target/argos-collector-service.jar:/argos.jar
     ports:
       - 8081:8080
 
   xl-deploy-stub:
-    build:
-      context: xl-deploy-stub
-      dockerfile: DockerFile
+    image: argosnotary/xl-deploy-stub:2.25.1
     environment:
       JAVA_OPTS: '-Xmx500m'
     ports:
