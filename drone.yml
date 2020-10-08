@@ -44,62 +44,27 @@ steps:
   depends_on:
   - pitest
 
-- name: build argos collector service image
-  image: plugins/docker
-  settings:
-    context: argos-collector-docker
-    dockerfile: argos-collector-docker/ArgosCollectorDockerFile
-    password:
-      from_secret: docker_login_token
-    repo: argosnotary/argos-collector-service-snapshot
-    tags: ${DRONE_BRANCH/\//_}${DRONE_TAG}
-    username:
-      from_secret: docker_login_user
-  depends_on:
-  - pitest
-  - sonar
-
-- name: build argos collector xldeploy stub
-  image: plugins/docker
-  settings:
-    context: argos-collector-docker/xl-deploy-stub
-    depends_on:
-    - pitest
-    - sonar
-    dockerfile: argos-collector-docker/xl-deploy-stub/DockerFile
-    password:
-      from_secret: docker_login_token
-    repo: argosnotary/argos-collector-xl-deploy-stub
-    tags: ${DRONE_BRANCH/\//_}${DRONE_TAG}
-    username:
-      from_secret: docker_login_user
-
 - name: argos-xldeploy-collector-service
-  pull: always
-  image: argosnotary/argos-collector-service-snapshot:${DRONE_BRANCH/\//_}${DRONE_TAG}
+  image: argosnotary/argos-docker-base:11.0.8
   detach: true
   environment:
     argos-collector.collectortypes.xldeploy.baseurl: http://argos-collector-xl-deploy-stub:8080
     spring.profiles.active: XLDEPLOY
+    RUNNABLE_JAR: '/drone/src/argos-collector-service/target/argos-collector-service.jar'
   depends_on:
-  - build argos collector service image
+  - pitest
+  - sonar
 
 - name: argos-git-collector-service
-  pull: always
-  image: argosnotary/argos-collector-service-snapshot:${DRONE_BRANCH/\//_}${DRONE_TAG}
+  image: argosnotary/argos-docker-base:11.0.8
   detach: true
   environment:
     argos-collector.collectortypes.git.baseurl: https://github.com
     spring.profiles.active: GIT
+    RUNNABLE_JAR: '/drone/src/argos-collector-service/target/argos-collector-service.jar'
   depends_on:
-  - build argos collector service image
-
-- name: argos-collector-xl-deploy-stub
-  pull: always
-  image: argosnotary/argos-collector-xl-deploy-stub:${DRONE_BRANCH/\//_}${DRONE_TAG}
-  detach: true
-  depends_on:
-  - build argos collector xldeploy stub
+  - pitest
+  - sonar
 
 - name: regression test
   image: argosnotary/argos-build:latest
@@ -114,6 +79,28 @@ steps:
   - argos-git-collector-service
   - argos-collector-xl-deploy-stub
 
+- name: release argos collector service stub image
+  image: plugins/docker
+  settings:
+    context: argos-collector-docker
+    dockerfile: argos-collector-docker/ArgosCollectorDockerFile
+    password:
+      from_secret: docker_login_token
+    repo: argosnotary/argos-collector-service
+    tags:
+    - ${DRONE_BRANCH//\//_}-beta
+    username:
+      from_secret: docker_login_user
+  when:
+    ref:
+      include:
+      - "refs/heads/master"
+      - "refs/heads/release/*"
+    event:
+    - push
+  depends_on:
+  - regression test
+
 - name: release argos collector service image
   image: plugins/docker
   settings:
@@ -124,7 +111,6 @@ steps:
     repo: argosnotary/argos-collector-service
     tags:
     - ${DRONE_TAG}
-    - latest
     username:
       from_secret: docker_login_user
   when:
@@ -144,6 +130,9 @@ steps:
       from_secret: argos-signing-private-key
     passphrase:
       from_secret: argos-signing-private-key-passphrase
+  when:
+    event:
+    - tag
   depends_on:
   - regression test
 
@@ -172,8 +161,13 @@ steps:
       from_secret: slack_webhook
   depends_on:
   - regression test
+  - release argos collector service stub image
   - deploy release to sonatype
   - release argos collector service image
+  
+services:
+- name: argos-collector-xl-deploy-stub
+  image: argosnotary/xl-deploy-stub:2.25.1
 
 volumes:
 - name: mvn_cache
