@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
 
-    Copyright (C) 2019 - 2020 Rabobank Nederland
+    Copyright (C) 2020 Argos Notary Coöperatie UA
 
     Licensed under the Apache License, Version 2.0 (the "License");
     you may not use this file except in compliance with the License.
@@ -27,7 +27,7 @@
         <module>argos-collector-docker</module>
         <module>argos-collector-test</module>
     </modules>
-    <groupId>com.rabobank.argos</groupId>
+    <groupId>com.argosnotary.argos</groupId>
     <artifactId>argos-collector</artifactId>
     <version>1.0-SNAPSHOT</version>
     <description>Argos Supply Chain Notary Artifact collectors</description>
@@ -43,21 +43,21 @@
     <developers>
         <developer>
             <name>Gerard Borst</name>
-            <email>gerard.borst@rabobank.nl</email>
+            <email>gerard.borst@argosnotary.com</email>
             <organization>Rabobank</organization>
-            <organizationUrl>https://www.rabobank.com</organizationUrl>
+            <organizationUrl>https://argosnotary.github.io</organizationUrl>
         </developer>
         <developer>
             <name>Bart Kors</name>
-            <email>bart.kors@rabobank.nl</email>
+            <email>bart.kors@argosnotary.com</email>
             <organization>Rabobank</organization>
-            <organizationUrl>https://www.rabobank.com</organizationUrl>
+            <organizationUrl>https://argosnotary.github.io</organizationUrl>
         </developer>
         <developer>
             <name>Michel Durieux</name>
-            <email>michel.durieux@rabobank.nl</email>
+            <email>michel.durieux@argosnotary.com</email>
             <organization>Rabobank</organization>
-            <organizationUrl>https://www.rabobank.com</organizationUrl>
+            <organizationUrl>https://argosnotary.github.io</organizationUrl>
         </developer>
     </developers>
 
@@ -204,11 +204,11 @@
                                 <avoidCallsTo>org.slf4j</avoidCallsTo>
                             </avoidCallsTo>
                             <excludedClasses>
-                                <excludedClasse>com.rabobank.argos.collector.rest.api.*</excludedClasse>
+                                <excludedClasse>com.argosnotary.argos.collector.rest.api.*</excludedClasse>
                                 <excludedClasse>*MapperImpl</excludedClasse>
                             </excludedClasses>
                             <targetClasses>
-                                <param>com.rabobank.argos.*</param>
+                                <param>com.argosnotary.argos.*</param>
                             </targetClasses>
                             <outputFormats>
                                 <format>XML</format>

@@ -13,29 +13,17 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import com.typesafe.config.Config;
-import com.typesafe.config.ConfigFactory;
+package com.argosnotary.argos.collector.xldeploy;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
+@NoArgsConstructor
 @Getter
-public class Properties {
-
-    private final String apiXLDeployBaseUrl;
-    private final String apiGitBaseUrl;
-    private static Properties INSTANCE;
-
-
-    public static Properties getInstance() {
-        if (INSTANCE == null) {
-            INSTANCE = new Properties();
-        }
-        return INSTANCE;
-    }
-
-    private Properties() {
-        Config conf = ConfigFactory.load();
-        apiXLDeployBaseUrl = conf.getString("argos-collector.xldeploy.rest-api.base-url");
-        apiGitBaseUrl = conf.getString("argos-collector.git.rest-api.base-url");
-    }
+@Setter
+@JsonIgnoreProperties(ignoreUnknown = true)
+public class XLDeployError {
+    private String stdout;
 }
-

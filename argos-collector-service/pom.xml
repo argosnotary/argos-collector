@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
 
-    Copyright (C) 2019 - 2020 Rabobank Nederland
+    Copyright (C) 2020 Argos Notary Coöperatie UA
 
     Licensed under the Apache License, Version 2.0 (the "License");
     you may not use this file except in compliance with the License.
@@ -19,7 +19,7 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
-    <groupId>com.rabobank.argos</groupId>
+    <groupId>com.argosnotary.argos</groupId>
     <artifactId>argos-collector-service</artifactId>
     <version>1.0-SNAPSHOT</version>
     <name>Argos collector service</name>
@@ -52,21 +52,21 @@
     <developers>
         <developer>
             <name>Gerard Borst</name>
-            <email>gerard.borst@rabobank.nl</email>
+            <email>gerard.borst@argosnotary.com</email>
             <organization>Rabobank</organization>
-            <organizationUrl>https://www.rabobank.com</organizationUrl>
+            <organizationUrl>https://argosnotary.github.io</organizationUrl>
         </developer>
         <developer>
             <name>Bart Kors</name>
-            <email>bart.kors@rabobank.nl</email>
+            <email>bart.kors@argosnotary.com</email>
             <organization>Rabobank</organization>
-            <organizationUrl>https://www.rabobank.com</organizationUrl>
+            <organizationUrl>https://argosnotary.github.io</organizationUrl>
         </developer>
         <developer>
             <name>Michel Durieux</name>
-            <email>michel.durieux@rabobank.nl</email>
+            <email>michel.durieux@argosnotary.com</email>
             <organization>Rabobank</organization>
-            <organizationUrl>https://www.rabobank.com</organizationUrl>
+            <organizationUrl>https://argosnotary.github.io</organizationUrl>
         </developer>
     </developers>
 
@@ -304,8 +304,8 @@
                                 <performBeanValidation>true</performBeanValidation>
                             </configOptions>
                             <configHelp>false</configHelp>
-                            <apiPackage>com.rabobank.argos.collector.rest.api.handler</apiPackage>
-                            <modelPackage>com.rabobank.argos.collector.rest.api.model</modelPackage>
+                            <apiPackage>com.argosnotary.argos.collector.rest.api.handler</apiPackage>
+                            <modelPackage>com.argosnotary.argos.collector.rest.api.model</modelPackage>
                         </configuration>
                     </execution>
                 </executions>
@@ -387,7 +387,7 @@
                         </goals>
                         <configuration>
                             <quiet>true</quiet>
-                            <excludePackageNames>com.rabobank.argos.collector.rest.api.*</excludePackageNames>
+                            <excludePackageNames>com.argosnotary.argos.collector.rest.api.*</excludePackageNames>
                         </configuration>
                     </execution>
                 </executions>
@@ -518,10 +518,10 @@
                                 <avoidCallsTo>org.slf4j</avoidCallsTo>
                             </avoidCallsTo>
                             <excludedClasses>
-                                <excludedClasse>com.rabobank.argos.collector.rest.api.*</excludedClasse>
+                                <excludedClasse>com.argosnotary.argos.collector.rest.api.*</excludedClasse>
                             </excludedClasses>
                             <targetClasses>
-                                <param>com.rabobank.argos.*</param>
+                                <param>com.argosnotary.argos.*</param>
                             </targetClasses>
                             <outputFormats>
                                 <format>XML</format>
