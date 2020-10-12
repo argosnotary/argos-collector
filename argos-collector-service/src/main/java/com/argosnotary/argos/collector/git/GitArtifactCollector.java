@@ -50,7 +50,7 @@ import static org.springframework.web.util.UriComponentsBuilder.fromHttpUrl;
 @Component
 @Profile(GitArtifactCollector.GIT)
 public class GitArtifactCollector implements ArtifactCollectorProvider<GitSpecificationAdapter> {
-    public static final String DEFAULT_EXCLUDE_PATTERNS = "**.{git,link}**";
+    public static final String DEFAULT_EXCLUDE_PATTERNS = "{**.git/**,**.git\\\\**}";
 
     static final String GIT = "GIT";
 

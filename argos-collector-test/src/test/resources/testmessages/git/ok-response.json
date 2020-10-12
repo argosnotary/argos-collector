@@ -1,66 +1,70 @@
 [
-  {
-    "uri": "argos-collector-api/api.yml",
-    "hash": "83f2eb37314433494a5bff1d054b27b244f10de377d51552a58ec9426e202981"
-  },
-  {
-    "uri": "argos-collector-api/pom.xml",
-    "hash": "e7222f69b41f8c77bbb7465d25649d90ff1dafc9d64e7ecfc5b17f425ff42761"
-  },
-  {
-    "uri": "argos-collector-docker/ArgosCollectorDockerFile",
-    "hash": "3ae55c130155cb117953a549b7ced3231e9d79784ea51277bc30d9286c594622"
-  },
-  {
-    "uri": "argos-collector-docker/docker-compose.yml",
-    "hash": "6706957a8f6335a943b2667f5144b25aa6f268f1a98f06d30ddd1c989b633711"
-  },
-  {
-    "uri": "argos-collector-docker/pom.xml",
-    "hash": "ae593ee846d62f43e074460ea7546e619660cc9f07e05144e3a66b6ee018ddff"
-  },
-  {
-    "uri": "argos-collector-docker/service-config/run.sh",
-    "hash": "d5d14083384c08b9cf2ee259a4abe45f5ecd243d622f5ea4bdaf748368b42441"
-  },
-  {
-    "uri": "argos-collector-service/pom.xml",
-    "hash": "6cf8aa4b7c4e9b0de3d12938c1135cbd898a3f812d71133d964ff678bd392af1"
-  },
-  {
-    "uri": "argos-collector-service/src/main/java/com/rabobank/argos/collector/ArtifactCollectorProvider.java",
-    "hash": "561a8ce60c0c4d740e0071582ef0f9d37dc71e5589adfb00bb27f8f0078b7abe"
-  },
-  {
-    "uri": "argos-collector-service/src/main/java/com/rabobank/argos/collector/ArtifactCollectorRestService.java",
-    "hash": "aa652668698a99cbde6a545df6eddf13f04d9f1193650dc21286d53244aeee7e"
-  },
-  {
-    "uri": "argos-collector-service/src/main/java/com/rabobank/argos/collector/ArtifactCollectorServiceApplication.java",
-    "hash": "d898a3303d8302fab9df31360fe837073ca0d50dc9b6455132475ff6e6b9856c"
-  },
-  {
-    "uri": "argos-collector-service/src/main/java/com/rabobank/argos/collector/CollectorType.java",
-    "hash": "2542609e7f62b4982c185f7649034a1a5519c9ae342f8ad630fe753087d54994"
-  },
-  {
-    "uri": "argos-collector-service/src/main/java/com/rabobank/argos/collector/git/ArtifactCollectorProviderImpl.java",
-    "hash": "521ab54f4e3d55573016dab163c3d8afe3cbb1e42e60345c8a32bf86229ead00"
-  },
-  {
-    "uri": "argos-collector-service/src/main/java/com/rabobank/argos/collector/xldeploy/ArtifactCollectorProviderImpl.java",
-    "hash": "8653242a6e2bb241439ad2c02b92cf51be06b8a9fdcfb4158e844ab5e28a7465"
-  },
-  {
-    "uri": "argos-collector-service/src/main/resources/application.yml",
-    "hash": "4a8f3edaade2a5810826fc1b9e70eedfc5a734c8cf4ee6f9e2d01acaefb67637"
-  },
-  {
-    "uri": "argos-collector-service/src/main/resources/static/swagger/index.html",
-    "hash": "cd08d313945c87981da8e888e2c7f235ed7be99a30dc33f6c9ec51dcfd8588cf"
-  },
-  {
-    "uri": "pom.xml",
-    "hash": "bf4072cc8a92aeff00389761d35c00adedfdcd74da4799135c83870854c62ad1"
-  }
+	{
+		"uri": ".gitignore",
+		"hash": "dcc1d61ea0ca0dedf6456f467d4c832743f68ea0144ec638a740ab231e3e4ee2"
+	},
+	{
+		"uri": "argos-collector-api/api.yml",
+		"hash": "83f2eb37314433494a5bff1d054b27b244f10de377d51552a58ec9426e202981"
+	},
+	{
+		"uri": "argos-collector-api/pom.xml",
+		"hash": "e7222f69b41f8c77bbb7465d25649d90ff1dafc9d64e7ecfc5b17f425ff42761"
+	},
+	{
+		"uri": "argos-collector-docker/ArgosCollectorDockerFile",
+		"hash": "3ae55c130155cb117953a549b7ced3231e9d79784ea51277bc30d9286c594622"
+	},
+	{
+		"uri": "argos-collector-docker/docker-compose.yml",
+		"hash": "6706957a8f6335a943b2667f5144b25aa6f268f1a98f06d30ddd1c989b633711"
+	},
+	{
+		"uri": "argos-collector-docker/pom.xml",
+		"hash": "ae593ee846d62f43e074460ea7546e619660cc9f07e05144e3a66b6ee018ddff"
+	},
+	{
+		"uri": "argos-collector-docker/service-config/run.sh",
+		"hash": "d5d14083384c08b9cf2ee259a4abe45f5ecd243d622f5ea4bdaf748368b42441"
+	},
+	{
+		"uri": "argos-collector-service/pom.xml",
+		"hash": "6cf8aa4b7c4e9b0de3d12938c1135cbd898a3f812d71133d964ff678bd392af1"
+	},
+	{
+		"uri": "argos-collector-service/src/main/java/com/rabobank/argos/collector/ArtifactCollectorProvider.java",
+		"hash": "561a8ce60c0c4d740e0071582ef0f9d37dc71e5589adfb00bb27f8f0078b7abe"
+	},
+	{
+		"uri": "argos-collector-service/src/main/java/com/rabobank/argos/collector/ArtifactCollectorRestService.java",
+		"hash": "aa652668698a99cbde6a545df6eddf13f04d9f1193650dc21286d53244aeee7e"
+	},
+	{
+		"uri": "argos-collector-service/src/main/java/com/rabobank/argos/collector/ArtifactCollectorServiceApplication.java",
+		"hash": "d898a3303d8302fab9df31360fe837073ca0d50dc9b6455132475ff6e6b9856c"
+	},
+	{
+		"uri": "argos-collector-service/src/main/java/com/rabobank/argos/collector/CollectorType.java",
+		"hash": "2542609e7f62b4982c185f7649034a1a5519c9ae342f8ad630fe753087d54994"
+	},
+	{
+		"uri": "argos-collector-service/src/main/java/com/rabobank/argos/collector/git/ArtifactCollectorProviderImpl.java",
+		"hash": "521ab54f4e3d55573016dab163c3d8afe3cbb1e42e60345c8a32bf86229ead00"
+	},
+	{
+		"uri": "argos-collector-service/src/main/java/com/rabobank/argos/collector/xldeploy/ArtifactCollectorProviderImpl.java",
+		"hash": "8653242a6e2bb241439ad2c02b92cf51be06b8a9fdcfb4158e844ab5e28a7465"
+	},
+	{
+		"uri": "argos-collector-service/src/main/resources/application.yml",
+		"hash": "4a8f3edaade2a5810826fc1b9e70eedfc5a734c8cf4ee6f9e2d01acaefb67637"
+	},
+	{
+		"uri": "argos-collector-service/src/main/resources/static/swagger/index.html",
+		"hash": "cd08d313945c87981da8e888e2c7f235ed7be99a30dc33f6c9ec51dcfd8588cf"
+	},
+	{
+		"uri": "pom.xml",
+		"hash": "bf4072cc8a92aeff00389761d35c00adedfdcd74da4799135c83870854c62ad1"
+	}
 ]
