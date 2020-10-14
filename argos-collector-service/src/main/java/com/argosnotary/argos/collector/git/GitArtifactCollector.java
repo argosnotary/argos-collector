@@ -54,7 +54,7 @@ public class GitArtifactCollector implements ArtifactCollectorProvider<GitSpecif
 
     static final String GIT = "GIT";
 
-    @Value("${argos-collector.collectortypes.git.baseurl}")
+    @Value("${argos-collector.baseurl}")
     private String gitBaseUrl;
 
     @Override

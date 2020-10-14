@@ -33,8 +33,4 @@ management:
     health:
       enabled: true
 argos-collector:
-  collectortypes:
-    xldeploy:
-      baseurl: http://localhost:9087
-    git:
-      baseurl: https://github.com
+  baseurl: https://github.com

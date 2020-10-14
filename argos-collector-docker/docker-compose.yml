@@ -28,7 +28,7 @@ services:
     image: argosnotary/argos-docker-base:11.0.8
     environment:
       spring.profiles.active: XLDEPLOY
-      argos-collector.collectortypes.xldeploy.baseurl: http://xl-deploy-stub:8080
+      argos-collector.baseurl: http://xl-deploy-stub:8080
       JAVA_OPTS: '-Xmx1g'
     volumes:
       - ../argos-collector-service/target/argos-collector-service.jar:/argos.jar
@@ -39,7 +39,7 @@ services:
     image: argosnotary/argos-docker-base:11.0.8
     environment:
       spring.profiles.active: GIT
-      argos-collector.collectortypes.git.baseurl: https://github.com
+      argos-collector.baseurl: https://github.com
       JAVA_OPTS: '-Xmx1g'
     volumes:
       - ../argos-collector-service/target/argos-collector-service.jar:/argos.jar

@@ -43,7 +43,7 @@ import static java.util.Objects.requireNonNull;
 @RequiredArgsConstructor
 public class ArtifactCollectorProviderImpl implements ArtifactCollectorProvider<XLDeploySpecificationAdapter> {
     static final String XLDEPLOY = "XLDEPLOY";
-    @Value("${argos-collector.collectortypes.xldeploy.baseurl}")
+    @Value("${argos-collector.baseurl}")
     private String xlDeployBaseUrl;
     private final RestTemplate restTemplate;
     private final ObjectMapper objectMapper = new ObjectMapper();
