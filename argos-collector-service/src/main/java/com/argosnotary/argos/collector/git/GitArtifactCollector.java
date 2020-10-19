@@ -18,6 +18,9 @@ package com.argosnotary.argos.collector.git;
 import com.argosnotary.argos.collector.ArtifactCollectorException;
 import com.argosnotary.argos.collector.ArtifactCollectorProvider;
 import com.argosnotary.argos.collector.rest.api.model.Artifact;
+
+import lombok.extern.slf4j.Slf4j;
+
 import org.apache.commons.codec.digest.DigestUtils;
 import org.eclipse.jgit.api.Git;
 import org.eclipse.jgit.api.errors.GitAPIException;
@@ -48,6 +51,7 @@ import java.util.Optional;
 import static org.springframework.web.util.UriComponentsBuilder.fromHttpUrl;
 
 @Component
+@Slf4j
 @Profile(GitArtifactCollector.GIT)
 public class GitArtifactCollector implements ArtifactCollectorProvider<GitSpecificationAdapter> {
     public static final String DEFAULT_EXCLUDE_PATTERNS = "{**.git/**,**.git\\\\**}";
@@ -59,6 +63,7 @@ public class GitArtifactCollector implements ArtifactCollectorProvider<GitSpecif
 
     @Override
     public List<Artifact> collectArtifacts(GitSpecificationAdapter spec) {
+        log.info("Collecting with base url [" + gitBaseUrl + "]");
 
         PathMatcher excludeMatcher = FileSystems.getDefault().getPathMatcher("glob:" + DEFAULT_EXCLUDE_PATTERNS);
 

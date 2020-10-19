@@ -50,14 +50,15 @@ public class ArtifactCollectorProviderImpl implements ArtifactCollectorProvider<
 
     @Override
     public List<Artifact> collectArtifacts(XLDeploySpecificationAdapter specificationAdapter) {
-        log.debug("collecting artifacts with :" + XLDEPLOY + " collector");
         HttpHeaders headers = createHeaders(specificationAdapter);
         HttpEntity request = new HttpEntity(headers);
         String xlDeployUrl = createResourceUrl(specificationAdapter);
+        log.info("collecting xldeploy artifacts with url [" + xlDeployUrl + "]");
         try {
             ResponseEntity<XLDeployResponse> response = restTemplate.exchange(xlDeployUrl, HttpMethod.GET, request, XLDeployResponse.class);
             return requireNonNull(response.getBody()).getEntity();
         } catch (RestClientResponseException e) {
+            log.error("collecting xldeploy artifacts has response exception: [" + e.getMessage() + "]");
             String message;
             try {
                 message = objectMapper
