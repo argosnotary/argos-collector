@@ -41,7 +41,7 @@
         <license-maven-plugin.version>3.0</license-maven-plugin.version>
         <lombok.version>1.18.14</lombok.version>
         <org.eclipse.jgit.version>5.8.1.202007141445-r</org.eclipse.jgit.version>
-        <openapi-generator-maven-plugin.version>4.2.3</openapi-generator-maven-plugin.version>
+        <openapi-generator-maven-plugin.version>5.1.0</openapi-generator-maven-plugin.version>
         <pitest.version>1.5.2</pitest.version>
         <pitest-junit5-plugin.version>0.12</pitest-junit5-plugin.version>
         <sonar-maven-plugin.version>3.7.0.1746</sonar-maven-plugin.version>
